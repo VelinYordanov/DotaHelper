@@ -1,0 +1,20 @@
+﻿[
+  {
+    "account_id": 1,
+    "personaname": "test1",
+    "avatarfull": "avatar1",
+    "similarity": 40.61759
+  },
+  {
+    "account_id": 2,
+    "personaname": "test2",
+    "avatarfull": "avatar2",
+    "similarity": 27.205688
+  },
+  {
+    "account_id": 3,
+    "personaname": "test3",
+    "avatarfull": "avatar3",
+    "similarity": 26.187504
+  }
+]

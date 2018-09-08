@@ -12,6 +12,11 @@ using Microsoft.EntityFrameworkCore;
 using DotaHelper.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using DotaHelper.Services.Commons.Interfaces;
+using DotaHelper.Web.Commons;
+using DotaHelper.Services.Interfaces;
+using DotaHelper.Services;
 
 namespace DotaHelper.Web
 {
@@ -27,6 +32,11 @@ namespace DotaHelper.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<Services.Commons.Interfaces.IMapper, Commons.Mapper>();
+            services.AddSingleton<IHttpClient, HttpClientAdapter>();
+            services.AddSingleton<IJsonSerializer, JsonSerializer>();
+            services.AddScoped<IPlayerService, PlayerService>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -40,6 +50,7 @@ namespace DotaHelper.Web
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

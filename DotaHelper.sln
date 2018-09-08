@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHelper.Web", "DotaHelper.Web\DotaHelper.Web.csproj", "{3C313052-D4D8-44DB-A481-8425D1C2FC0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotaHelper.Web", "DotaHelper.Web\DotaHelper.Web.csproj", "{3C313052-D4D8-44DB-A481-8425D1C2FC0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotaHelper.Services", "DotaHelper.Services\DotaHelper.Services.csproj", "{0471C321-4B22-4E65-8220-50B801634209}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotaHelper.Models", "DotaHelper.JsonModels\DotaHelper.Models.csproj", "{1D91776A-44FB-48F5-97B3-0EF3DCDFDE47}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotaHelper.Web.ViewModels", "DotaHelper.Web.ViewModels\DotaHelper.Web.ViewModels.csproj", "{EE29ADA6-ECDB-494A-9233-DE83BC92AAE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FE30874C-461F-4DAE-B902-0BE32F2FE2B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotaHelper.Services.Tests", "DotaHelper.Services.Tests\DotaHelper.Services.Tests.csproj", "{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,28 @@ Global
 		{3C313052-D4D8-44DB-A481-8425D1C2FC0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C313052-D4D8-44DB-A481-8425D1C2FC0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C313052-D4D8-44DB-A481-8425D1C2FC0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0471C321-4B22-4E65-8220-50B801634209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0471C321-4B22-4E65-8220-50B801634209}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0471C321-4B22-4E65-8220-50B801634209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0471C321-4B22-4E65-8220-50B801634209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D91776A-44FB-48F5-97B3-0EF3DCDFDE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D91776A-44FB-48F5-97B3-0EF3DCDFDE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D91776A-44FB-48F5-97B3-0EF3DCDFDE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D91776A-44FB-48F5-97B3-0EF3DCDFDE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE29ADA6-ECDB-494A-9233-DE83BC92AAE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE29ADA6-ECDB-494A-9233-DE83BC92AAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE29ADA6-ECDB-494A-9233-DE83BC92AAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE29ADA6-ECDB-494A-9233-DE83BC92AAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2} = {FE30874C-461F-4DAE-B902-0BE32F2FE2B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AFA4CE3-A750-46A8-9D02-3B6320A3EBAD}
