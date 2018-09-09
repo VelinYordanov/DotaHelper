@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DotaHelper.Web.Commons
 {
-    public class MappingProfile : Profile
+    public class MappingProfile : AutoMapper.Profile
     {
         public MappingProfile()
         {

@@ -2,6 +2,7 @@
 using DotaHelper.Models.JsonModels;
 using DotaHelper.Services.Commons;
 using DotaHelper.Services.Commons.Interfaces;
+using DotaHelper.Services.Interfaces;
 using DotaHelper.Web.Commons;
 using Moq;
 using NUnit.Framework;
@@ -23,7 +24,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             var httpClient = new Mock<IHttpClient>();
             var jsonSerializer = new Mock<IJsonSerializer>();
             var mapper = new Mock<IMapper>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object);
+            var heroesProvider = new Mock<IHeroesProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
             await playerService.SearchPlayers("test");
 
             httpClient.Verify(x => x.GetAsync(string.Format(DotaApiEndpoints.SearchUrlTemplate, "test"),null), Times.Once);
@@ -38,7 +40,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             httpClient.Setup(x => x.GetAsync(It.IsAny<string>(), null)).Returns(() => jsonToReturn);
             var jsonSerializer = new Mock<IJsonSerializer>();
             var mapper = new Mock<IMapper>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object);
+            var heroesProvider = new Mock<IHeroesProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object,heroesProvider.Object);
             await playerService.SearchPlayers("test");
 
             jsonSerializer.Verify(x => x.Deserialize<List<PlayerSearchJsonModel>>(jsonToReturn.Result));
@@ -54,7 +57,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             IJsonSerializer jsonSerializer = new JsonSerializer();
             var configuration = new AutoMapper.MapperConfiguration(cnf => cnf.AddProfile<MappingProfile>());
             IMapper mapper = new Mapper(new AutoMapper.Mapper(configuration));
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer, mapper);
+            var heroesProvider = new Mock<IHeroesProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer, mapper,heroesProvider.Object);
             var result = (await playerService.SearchPlayers("test")).ToList();
 
             Assert.AreEqual(3, result.Count);
