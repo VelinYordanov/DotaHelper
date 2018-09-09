@@ -12,16 +12,17 @@ using System.Threading.Tasks;
 namespace DotaHelper.Services.Providers
 {
     public class HeroesProvider : IHeroesProvider
-    {
-        private const string FullHeroNameStart = "npc_dota_hero_";
+    {        
         private readonly IHttpClient httpClient;
         private readonly IJsonSerializer jsonSerializer;
+        private readonly IMapper mapper;
         private IDictionary<string, HeroDto> heroIdsToHeroes;
 
-        public HeroesProvider(IHttpClient httpClient, IJsonSerializer jsonSerializer)
+        public HeroesProvider(IHttpClient httpClient, IJsonSerializer jsonSerializer, IMapper mapper)
         {
             this.httpClient = httpClient ?? throw new ArgumentException(nameof(httpClient));
             this.jsonSerializer = jsonSerializer ?? throw new ArgumentException(nameof(jsonSerializer));
+            this.mapper = mapper ?? throw new ArgumentException(nameof(mapper));
             this.heroIdsToHeroes = new Dictionary<string, HeroDto>();
         }
 
@@ -38,8 +39,8 @@ namespace DotaHelper.Services.Providers
         private async Task Refresh()
         {
             var heroes = await this.httpClient.GetAsync(DotaApiEndpoints.AllHeroesUrl);
-            var data = this.jsonSerializer.Deserialize<ICollection<HeroesJsonModel>>(heroes);
-            var mappedHeroes = data.Select(x => new HeroDto { Id = x.Id, Name = x.Name, ImageUrl = string.Format(DotaApiEndpoints.HeroImageUrlTemplate, x.FullName.Remove(0, FullHeroNameStart.Length)) });
+            var data = this.jsonSerializer.Deserialize<ICollection<HeroJsonModel>>(heroes);
+            var mappedHeroes = mapper.Map<IEnumerable<HeroDto>>(data);
             this.heroIdsToHeroes = mappedHeroes.GroupBy(x => x.Id).ToDictionary(x => x.Key, x => x.First());
         }
 

@@ -16,8 +16,9 @@ namespace DotaHelper.Services.Tests.Providers.HeroesProviderTests
         {
             IHttpClient httpClient = null;
             var jsonSerializer = new Mock<IJsonSerializer>();
+            var mapper = new Mock<IMapper>();
 
-            Assert.Throws<ArgumentException>(() => new HeroesProvider(httpClient, jsonSerializer.Object));
+            Assert.Throws<ArgumentException>(() => new HeroesProvider(httpClient, jsonSerializer.Object,mapper.Object));
         }
 
         [Test]
@@ -25,8 +26,19 @@ namespace DotaHelper.Services.Tests.Providers.HeroesProviderTests
         {
             var httpClient = new Mock<IHttpClient>();
             IJsonSerializer jsonSerializer = null;
+            var mapper = new Mock<IMapper>();
 
-            Assert.Throws<ArgumentException>(() => new HeroesProvider(httpClient.Object, jsonSerializer));
+            Assert.Throws<ArgumentException>(() => new HeroesProvider(httpClient.Object, jsonSerializer,mapper.Object));
+        }
+
+        [Test]
+        public void ThrownArgumentExceptionWhenMapperIsNull()
+        {
+            var httpClient = new Mock<IHttpClient>();
+            var jsonSerializer = new Mock<IJsonSerializer>();
+            IMapper mapper = null;
+
+            Assert.Throws<ArgumentException>(() => new HeroesProvider(httpClient.Object, jsonSerializer.Object, mapper));
         }
 
         [Test]
@@ -34,8 +46,9 @@ namespace DotaHelper.Services.Tests.Providers.HeroesProviderTests
         {
             var httpClient = new Mock<IHttpClient>();
             var jsonSerializer = new Mock<IJsonSerializer>();
+            var mapper = new Mock<IMapper>();
 
-            Assert.DoesNotThrow(() => new HeroesProvider(httpClient.Object, jsonSerializer.Object));
+            Assert.DoesNotThrow(() => new HeroesProvider(httpClient.Object, jsonSerializer.Object,mapper.Object));
         }
     }
 }

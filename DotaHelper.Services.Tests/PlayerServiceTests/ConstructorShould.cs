@@ -52,7 +52,7 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
         }
 
         [Test]
-        public void ShouldNotThrowWhenAllParametersAreCorreect()
+        public void ShouldNotThrowWhenAllParametersAreCorrect()
         {
             var httpClient = new Mock<IHttpClient>();
             var jsonSerializer = new Mock<IJsonSerializer>();

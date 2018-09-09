@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotaHelper.Models.JsonModels
 {
-    public class HeroesJsonModel
+    public class HeroJsonModel
     {
         [JsonProperty("id")]
         public string Id { get; set; }
