@@ -20,8 +20,8 @@ namespace DotaHelper.Services.Providers
 
         public HeroesProvider(IHttpClient httpClient, IJsonSerializer jsonSerializer)
         {
-            this.httpClient = httpClient;
-            this.jsonSerializer = jsonSerializer;
+            this.httpClient = httpClient ?? throw new ArgumentException(nameof(httpClient));
+            this.jsonSerializer = jsonSerializer ?? throw new ArgumentException(nameof(jsonSerializer));
             this.heroIdsToHeroes = new Dictionary<string, HeroDto>();
         }
 
@@ -50,8 +50,7 @@ namespace DotaHelper.Services.Providers
                 await Refresh();
             }
 
-            HeroDto hero = null;
-            heroIdsToHeroes.TryGetValue(id, out hero);
+            heroIdsToHeroes.TryGetValue(id, out HeroDto hero);
             return hero;
         }
     }
