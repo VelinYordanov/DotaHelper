@@ -26,7 +26,7 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             var mapper = new Mock<IMapper>();
             var heroesProvider = new Mock<IHeroesProvider>();
             var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
-            await playerService.SearchPlayers("test");
+            await playerService.SearchPlayersAsync("test");
 
             httpClient.Verify(x => x.GetAsync(string.Format(DotaApiEndpoints.SearchUrlTemplate, "test"),null), Times.Once);
         }
@@ -42,7 +42,7 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             var mapper = new Mock<IMapper>();
             var heroesProvider = new Mock<IHeroesProvider>();
             var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object,heroesProvider.Object);
-            await playerService.SearchPlayers("test");
+            await playerService.SearchPlayersAsync("test");
 
             jsonSerializer.Verify(x => x.Deserialize<List<PlayerSearchJsonModel>>(jsonToReturn.Result));
         }
@@ -59,7 +59,7 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             IMapper mapper = new Mapper(new AutoMapper.Mapper(configuration));
             var heroesProvider = new Mock<IHeroesProvider>();
             var playerService = new PlayerService(httpClient.Object, jsonSerializer, mapper,heroesProvider.Object);
-            var result = (await playerService.SearchPlayers("test")).ToList();
+            var result = (await playerService.SearchPlayersAsync("test")).ToList();
 
             Assert.AreEqual(3, result.Count);
             Assert.AreEqual("1", result[0].AccountId);

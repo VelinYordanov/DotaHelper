@@ -13,17 +13,14 @@ namespace DotaHelper.Services
 {
     public class PlayerService : IPlayerService
     {
-        private const string DireTeam = "Dire";
-        private const string RadiantTeam = "Radiant";
-        private const int PlayerHeroesMinNumberOfGames = 50;
-        private const int NumberOfMostPlayedPlayerHeroesToShow = 5;
+        private const int NumberOfBestHeroesToShow = 5;
 
         private readonly IHttpClient httpClient;
         private readonly IJsonSerializer jsonSerializer;
         private readonly IMapper mapper;
         private readonly IHeroesProvider heroesProvider;
 
-        public PlayerService(IHttpClient httpClient, IJsonSerializer jsonSerializer, IMapper mapper , IHeroesProvider heroesProvider)
+        public PlayerService(IHttpClient httpClient, IJsonSerializer jsonSerializer, IMapper mapper, IHeroesProvider heroesProvider)
         {
             this.httpClient = httpClient ?? throw new ArgumentException(nameof(httpClient));
             this.jsonSerializer = jsonSerializer ?? throw new ArgumentException(nameof(jsonSerializer));
@@ -31,7 +28,7 @@ namespace DotaHelper.Services
             this.heroesProvider = heroesProvider ?? throw new ArgumentException(nameof(heroesProvider));
         }
 
-        public async Task<IEnumerable<PlayerSearchDto>> SearchPlayers(string name)
+        public async Task<IEnumerable<PlayerSearchDto>> SearchPlayersAsync(string name)
         {
             var url = string.Format(DotaApiEndpoints.SearchUrlTemplate, name);
             var jsonData = await this.httpClient.GetAsync(url);
@@ -40,52 +37,46 @@ namespace DotaHelper.Services
             return playerDtos;
         }
 
-        public async Task<PlayerDetailsDto> GetPlayerDetails(string accountId)
+        public async Task<PlayerDetailsDto> GetPlayerDetailsAsync(string accountId)
         {
             var detailsUrl = string.Format(DotaApiEndpoints.PlayerDetailsUrlTemplate, accountId);
             var recentMatchesUrl = string.Format(DotaApiEndpoints.PlayerRecentMatchesUrlTemplate, accountId);
-            var heroesUrl = string.Format(DotaApiEndpoints.PlayerHeroesUrlTemplate, accountId, PlayerHeroesMinNumberOfGames);
+            var heroesUrl = string.Format(DotaApiEndpoints.PlayerHeroesUrlTemplate, accountId);
             var winsLossesUrl = string.Format(DotaApiEndpoints.PlayerWinLossUrlTemplate, accountId);
 
             var detailsDataTask = this.httpClient.GetAsync(detailsUrl);
             var winsLossesTask = this.httpClient.GetAsync(winsLossesUrl);
             var recentMatchesTask = this.httpClient.GetAsync(recentMatchesUrl);
             var heroesTask = this.httpClient.GetAsync(heroesUrl);
+            var allHeroesTask = this.heroesProvider.GetAllHeroesAsync();
 
-            await Task.WhenAll(detailsDataTask, winsLossesTask, recentMatchesTask, heroesTask);
+            await Task.WhenAll(detailsDataTask, winsLossesTask, recentMatchesTask, heroesTask, allHeroesTask);
             var detailsData = detailsDataTask.Result;
             var winLossData = winsLossesTask.Result;
             var recentMatchesData = recentMatchesTask.Result;
             var heroesData = heroesTask.Result;
+            var heroIdsToHeroes = allHeroesTask.Result;
 
-            var detailsModel = this.jsonSerializer.Deserialize<PlayerDetailsJsonModel>(detailsData);
-            var winLossModel = this.jsonSerializer.Deserialize<PlayerWinsLossesJsonModel>(winLossData);
-            var recentMatchesModel = this.jsonSerializer.Deserialize<ICollection<PlayerRecentMatchesJsonModel>>(recentMatchesData);
-            var heroesModel = this.jsonSerializer.Deserialize<ICollection<PlayerHeroesJsonModel>>(heroesData).Take(NumberOfMostPlayedPlayerHeroesToShow).ToList();
+            var detailsJsonModel = this.jsonSerializer.Deserialize<PlayerDetailsJsonModel>(detailsData);
+            var winLossJsonModel = this.jsonSerializer.Deserialize<PlayerWinsLossesJsonModel>(winLossData);
+            var recentMatchesJsonModel = this.jsonSerializer.Deserialize<ICollection<PlayerRecentMatchesJsonModel>>(recentMatchesData);
+            var playerHeroesJsonModel = this.jsonSerializer.Deserialize<ICollection<PlayerHeroesJsonModel>>(heroesData)?.Take(NumberOfBestHeroesToShow).ToList();
 
-            foreach (var item in heroesModel)
+            var detailsDto = this.mapper.Map<PlayerProfileDetailsDto>(detailsJsonModel);
+            var winLossDto = this.mapper.Map<PlayerWinsLossesDto>(winLossJsonModel);
+            var recentMatchesDto = this.mapper.Map<ICollection<PlayerRecentMatchesDto>>(recentMatchesJsonModel);
+            var heroesDto = this.mapper.Map<ICollection<PlayerHeroesDto>>(playerHeroesJsonModel);
+            foreach (var hero in heroesDto)
             {
-                var hero = await this.heroesProvider.GetHero(item.HeroId);
-                item.HeroName = hero.Name;
-                item.HeroImageUrl = hero.ImageUrl;
-                item.GamesLost = item.GamesPlayed - item.GamesWon;
-                item.WinRate = Math.Round((item.GamesWon / item.GamesPlayed) * 100);
+                hero.Hero = await this.heroesProvider.GetHeroAsync(hero.HeroId);
             }
 
-            foreach (var item in recentMatchesModel)
+            foreach (var match in recentMatchesDto)
             {
-                var hero = await this.heroesProvider.GetHero(item.HeroId);
-                item.HeroName = hero.Name;
-                item.HeroImageUrl = hero.ImageUrl;
-
-                //https://wiki.teamfortress.com/wiki/WebAPI/GetMatchHistory#Player_Slot
-                item.Team = item.PlayerSlot > 128 ? DireTeam : RadiantTeam;
-                item.WonGame = item.RadiantWin ? item.Team == RadiantTeam : item.Team == DireTeam;
-                item.LobbyType = (LobbyType)item.Lobby;
-                item.GameMode = (GameMode)item.Game;
+                match.Hero = await this.heroesProvider.GetHeroAsync(match.HeroId);
             }
 
-            var playerDetailsDto = new PlayerDetailsDto { Details = detailsModel, Heroes = heroesModel, RecentMatchHistory = recentMatchesModel, WinsAndLosses = winLossModel };
+            var playerDetailsDto = new PlayerDetailsDto { Details = detailsDto, Heroes = heroesDto, RecentMatchHistory = recentMatchesDto, WinsAndLosses = winLossDto };
             return playerDetailsDto;
         }
     }

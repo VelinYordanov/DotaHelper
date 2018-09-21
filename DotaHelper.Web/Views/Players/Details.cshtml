@@ -1,0 +1,56 @@
+﻿@model PlayerDetailsViewModel
+
+<p>@Model.Details.Name</p>
+<p>@Model.Details.RankTier</p>
+<p>@Model.WinsAndLosses.Wins</p>
+<p>@Model.WinsAndLosses.Losses</p>
+<h3>Most played heroes</h3>
+<div>
+    <table>
+        <tr>
+            <th>Hero</th>
+            <th>Total games</th>
+            <th>Win Rate</th>
+            <th>Wins</th>
+            <th>Losses</th>
+        </tr>
+        @foreach (var hero in Model.Heroes)
+        {
+            <tr>
+                <td><img src=@hero.Hero.ImageUrl alt=@hero.Hero.Name /></td>
+                <td>@hero.GamesPlayed</td>
+                <td>@hero.WinRate</td>
+                <td>@hero.GamesWon</td>
+                <td>@hero.GamesLost</td>
+            </tr>
+        }
+    </table>
+</div>
+<h3>Recent matches</h3>
+<div>
+    <table>
+        <tr>
+            <th>Hero</th>
+            <th>Won game</th>
+            <th>Game type</th>
+            <th>Duration</th>
+            <th>Kills</th>
+            <th>Deaths</th>
+            <th>Assists</th>
+            <th>Hero Damage</th>
+        </tr>
+        @foreach (var match in Model.RecentMatchHistory)
+        {
+            <tr>
+                <td><img src=@match.Hero.ImageUrl alt=@match.Hero.Name /></td>
+                <td>@match.WonGame</td>
+                <td>@(match.GameMode + "/" + match.LobbyType)</td>
+                <td>@match.Duration</td>
+                <td>@match.Kills</td>
+                <td>@match.Deaths</td>
+                <td>@match.Assists</td>
+                <td>@match.HeroDamageDone</td>
+            </tr>
+        }
+    </table>
+</div>

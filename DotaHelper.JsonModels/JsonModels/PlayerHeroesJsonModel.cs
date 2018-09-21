@@ -10,18 +10,10 @@ namespace DotaHelper.Models.JsonModels
         [JsonProperty("hero_id")]
         public string HeroId { get; set; }
 
-        public string HeroName { get; set; }
-
-        public string HeroImageUrl { get; set; }
-
         [JsonProperty("games")]
         public double GamesPlayed { get; set; }
 
         [JsonProperty("win")]
         public double GamesWon { get; set; }
-
-        public double GamesLost { get; set; }
-
-        public double WinRate { get; set; }
     }
 }

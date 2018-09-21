@@ -19,5 +19,10 @@ namespace DotaHelper.Web.Commons
         {
             return this.mapper.Map<TDest>(source);
         }
+
+        public TSource Map<TDest, TSource>(TSource source, TDest dest)
+        {
+            return this.mapper.Map(dest, source);
+        }
     }
 }

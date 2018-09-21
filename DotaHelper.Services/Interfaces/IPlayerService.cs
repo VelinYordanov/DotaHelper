@@ -8,6 +8,8 @@ namespace DotaHelper.Services.Interfaces
 {
     public interface IPlayerService
     {
-        Task<IEnumerable<PlayerSearchDto>> SearchPlayers(string name);
+        Task<IEnumerable<PlayerSearchDto>> SearchPlayersAsync(string name);
+
+        Task<PlayerDetailsDto> GetPlayerDetailsAsync(string accountId);
     }
 }

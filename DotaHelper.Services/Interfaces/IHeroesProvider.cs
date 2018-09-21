@@ -8,8 +8,8 @@ namespace DotaHelper.Services.Interfaces
 {
     public interface IHeroesProvider
     {
-        Task<IDictionary<string, HeroDto>> GetAllHeroes();
+        Task<IEnumerable<HeroDto>> GetAllHeroesAsync();
 
-        Task<HeroDto> GetHero(string id);
+        Task<HeroDto> GetHeroAsync(string id);
     }
 }

@@ -1,11 +1,11 @@
-﻿using DotaHelper.Models.JsonModels;
+﻿using DotaHelper.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DotaHelper.Models.Dto
+namespace DotaHelper.Web.ViewModels
 {
-    public class PlayerDetailsDto
+    public class PlayerDetailsViewModel
     {
         public PlayerProfileDetailsDto Details { get; set; }
 

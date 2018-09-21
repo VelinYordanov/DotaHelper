@@ -17,6 +17,7 @@ using DotaHelper.Services.Commons.Interfaces;
 using DotaHelper.Web.Commons;
 using DotaHelper.Services.Interfaces;
 using DotaHelper.Services;
+using DotaHelper.Services.Providers;
 
 namespace DotaHelper.Web
 {
@@ -36,6 +37,7 @@ namespace DotaHelper.Web
             services.AddSingleton<IHttpClient, HttpClientAdapter>();
             services.AddSingleton<IJsonSerializer, JsonSerializer>();
             services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IHeroesProvider, HeroesProvider>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -50,6 +52,7 @@ namespace DotaHelper.Web
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddMemoryCache();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
