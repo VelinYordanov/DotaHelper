@@ -11,5 +11,7 @@ namespace DotaHelper.Services.Interfaces
         Task<IEnumerable<PlayerSearchDto>> SearchPlayersAsync(string name);
 
         Task<PlayerDetailsDto> GetPlayerDetailsAsync(string accountId);
+
+        Task<MatchDetailsDto> GetMatchDetailsAsync(string id);
     }
 }

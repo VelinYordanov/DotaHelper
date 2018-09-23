@@ -38,6 +38,7 @@ namespace DotaHelper.Web
             services.AddSingleton<IJsonSerializer, JsonSerializer>();
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<IHeroesProvider, HeroesProvider>();
+            services.AddScoped<IItemsProvider, ItemsProvider>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

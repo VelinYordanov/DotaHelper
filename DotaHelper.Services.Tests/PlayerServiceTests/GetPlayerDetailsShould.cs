@@ -24,7 +24,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             mapper.Setup(x => x.Map<ICollection<PlayerHeroesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerHeroesDto>());
             mapper.Setup(x => x.Map<ICollection<PlayerRecentMatchesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerRecentMatchesDto>());
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
 
             await playerService.GetPlayerDetailsAsync("id");
 
@@ -40,7 +41,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             mapper.Setup(x => x.Map<ICollection<PlayerHeroesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerHeroesDto>());
             mapper.Setup(x => x.Map<ICollection<PlayerRecentMatchesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerRecentMatchesDto>());
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
 
             await playerService.GetPlayerDetailsAsync("id");
 
@@ -56,7 +58,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             mapper.Setup(x => x.Map<ICollection<PlayerHeroesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerHeroesDto>());
             mapper.Setup(x => x.Map<ICollection<PlayerRecentMatchesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerRecentMatchesDto>());
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
 
             await playerService.GetPlayerDetailsAsync("id");
 
@@ -72,7 +75,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             mapper.Setup(x => x.Map<ICollection<PlayerHeroesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerHeroesDto>());
             mapper.Setup(x => x.Map<ICollection<PlayerRecentMatchesDto>>(It.IsAny<object>())).Returns(() => new List<PlayerRecentMatchesDto>());
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
 
             await playerService.GetPlayerDetailsAsync("id");
 
@@ -94,7 +98,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             mapper.Setup(x => x.Map<PlayerProfileDetailsDto>(It.IsAny<object>())).Returns(() => playerProfile);
             mapper.Setup(x => x.Map<PlayerWinsLossesDto>(It.IsAny<object>())).Returns(() => playerWinsAndLosses);
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
 
             var result = await playerService.GetPlayerDetailsAsync("id");
             Assert.AreEqual(heroes, result.Heroes);

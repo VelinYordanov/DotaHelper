@@ -25,23 +25,25 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             var jsonSerializer = new Mock<IJsonSerializer>();
             var mapper = new Mock<IMapper>();
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
             await playerService.SearchPlayersAsync("test");
 
-            httpClient.Verify(x => x.GetAsync(string.Format(DotaApiEndpoints.SearchUrlTemplate, "test"),null), Times.Once);
+            httpClient.Verify(x => x.GetAsync(string.Format(DotaApiEndpoints.SearchUrlTemplate, "test"), null), Times.Once);
         }
 
         [Test]
         public async Task DeserializeTheJsonRecievedFromTheEndpoint()
         {
-            var directory = Path.Combine(Directory.GetParent(Path.GetDirectoryName(Path.GetDirectoryName(TestContext.CurrentContext.TestDirectory))).FullName, "PlayerServiceTests","players-search.json");
+            var directory = Path.Combine(Directory.GetParent(Path.GetDirectoryName(Path.GetDirectoryName(TestContext.CurrentContext.TestDirectory))).FullName, "PlayerServiceTests", "players-search.json");
             var jsonToReturn = File.ReadAllTextAsync(directory);
             var httpClient = new Mock<IHttpClient>();
             httpClient.Setup(x => x.GetAsync(It.IsAny<string>(), null)).Returns(() => jsonToReturn);
             var jsonSerializer = new Mock<IJsonSerializer>();
             var mapper = new Mock<IMapper>();
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object,heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer.Object, mapper.Object, heroesProvider.Object, itemsProvider.Object);
             await playerService.SearchPlayersAsync("test");
 
             jsonSerializer.Verify(x => x.Deserialize<List<PlayerSearchJsonModel>>(jsonToReturn.Result));
@@ -58,7 +60,8 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
             var configuration = new AutoMapper.MapperConfiguration(cnf => cnf.AddProfile<MappingProfile>());
             IMapper mapper = new Mapper(new AutoMapper.Mapper(configuration));
             var heroesProvider = new Mock<IHeroesProvider>();
-            var playerService = new PlayerService(httpClient.Object, jsonSerializer, mapper,heroesProvider.Object);
+            var itemsProvider = new Mock<IItemsProvider>();
+            var playerService = new PlayerService(httpClient.Object, jsonSerializer, mapper, heroesProvider.Object, itemsProvider.Object);
             var result = (await playerService.SearchPlayersAsync("test")).ToList();
 
             Assert.AreEqual(3, result.Count);

@@ -45,6 +45,29 @@ namespace DotaHelper.Web.Commons
                 .ForMember(x => x.WonGame, x => x.MapFrom(y => y.RadiantWin ? y.PlayerSlot <= 128 : y.PlayerSlot > 128));
 
             CreateMap<PlayerDetailsDto, PlayerDetailsViewModel>();
+
+            CreateMap<PlayerWinsLossesJsonModel, PlayerWinsLossesDto>();
+
+            CreateMap<MatchPlayerJsonModel, MatchPlayerDto>()
+                .ForMember(x => x.Items, x => x.MapFrom(y => new List<ItemDto>
+                {
+                    new ItemDto{ ItemId = y.Item1Id},
+                    new ItemDto{ ItemId = y.Item2Id},
+                    new ItemDto{ ItemId = y.Item3Id},
+                    new ItemDto{ ItemId = y.Item4Id},
+                    new ItemDto{ ItemId = y.Item5Id},
+                    new ItemDto{ ItemId = y.Item6Id},
+                }));
+
+            CreateMap<ItemJsonModel, ItemDto>();
+
+            CreateMap<MatchDetailsJsonModel, MatchDetailsDto>()
+                .ForMember(x => x.GameMode, x => x.MapFrom(y => (GameMode)y.Game))
+                .ForMember(x => x.LobbyType, x => x.MapFrom(y => (LobbyType)y.Lobby));
+
+            CreateMap<PickOrBanJsonModel, PickOrBanDto>();
+
+            CreateMap<MatchDetailsDto, MatchDetailsViewModel>();
         }
     }
 }

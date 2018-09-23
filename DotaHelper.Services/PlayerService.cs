@@ -19,13 +19,15 @@ namespace DotaHelper.Services
         private readonly IJsonSerializer jsonSerializer;
         private readonly IMapper mapper;
         private readonly IHeroesProvider heroesProvider;
+        private readonly IItemsProvider itemsProvider;
 
-        public PlayerService(IHttpClient httpClient, IJsonSerializer jsonSerializer, IMapper mapper, IHeroesProvider heroesProvider)
+        public PlayerService(IHttpClient httpClient, IJsonSerializer jsonSerializer, IMapper mapper, IHeroesProvider heroesProvider, IItemsProvider itemsProvider)
         {
             this.httpClient = httpClient ?? throw new ArgumentException(nameof(httpClient));
             this.jsonSerializer = jsonSerializer ?? throw new ArgumentException(nameof(jsonSerializer));
             this.mapper = mapper ?? throw new ArgumentException(nameof(mapper));
             this.heroesProvider = heroesProvider ?? throw new ArgumentException(nameof(heroesProvider));
+            this.itemsProvider = itemsProvider ?? throw new ArgumentException(nameof(itemsProvider));
         }
 
         public async Task<IEnumerable<PlayerSearchDto>> SearchPlayersAsync(string name)
@@ -48,14 +50,12 @@ namespace DotaHelper.Services
             var winsLossesTask = this.httpClient.GetAsync(winsLossesUrl);
             var recentMatchesTask = this.httpClient.GetAsync(recentMatchesUrl);
             var heroesTask = this.httpClient.GetAsync(heroesUrl);
-            var allHeroesTask = this.heroesProvider.GetAllHeroesAsync();
 
-            await Task.WhenAll(detailsDataTask, winsLossesTask, recentMatchesTask, heroesTask, allHeroesTask);
+            await Task.WhenAll(detailsDataTask, winsLossesTask, recentMatchesTask, heroesTask);
             var detailsData = detailsDataTask.Result;
             var winLossData = winsLossesTask.Result;
             var recentMatchesData = recentMatchesTask.Result;
             var heroesData = heroesTask.Result;
-            var heroIdsToHeroes = allHeroesTask.Result;
 
             var detailsJsonModel = this.jsonSerializer.Deserialize<PlayerDetailsJsonModel>(detailsData);
             var winLossJsonModel = this.jsonSerializer.Deserialize<PlayerWinsLossesJsonModel>(winLossData);
@@ -78,6 +78,24 @@ namespace DotaHelper.Services
 
             var playerDetailsDto = new PlayerDetailsDto { Details = detailsDto, Heroes = heroesDto, RecentMatchHistory = recentMatchesDto, WinsAndLosses = winLossDto };
             return playerDetailsDto;
+        }
+
+        public async Task<MatchDetailsDto> GetMatchDetailsAsync(string matchId)
+        {
+            var matchData = await this.httpClient.GetAsync(string.Format(DotaApiEndpoints.MatchDetailsUrl, matchId));
+            var matchDetailsDto = this.mapper.Map<MatchDetailsDto>(this.jsonSerializer.Deserialize<MatchDetailsJsonModel>(matchData));
+            foreach (var pickOrBan in matchDetailsDto.PicksAndBans)
+            {
+                pickOrBan.Hero = await this.heroesProvider.GetHeroAsync(pickOrBan.HeroId);
+            }
+
+            foreach (var player in matchDetailsDto.Players)
+            {
+                player.Hero = await this.heroesProvider.GetHeroAsync(player.HeroId);
+                player.Items = await Task.WhenAll(player.Items.Where(x => x.ItemId != "0").Select(async x => await this.itemsProvider.GetItemById(x.ItemId)).ToList());
+            }
+
+            return matchDetailsDto;
         }
     }
 }

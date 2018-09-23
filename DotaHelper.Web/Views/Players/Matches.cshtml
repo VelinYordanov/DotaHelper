@@ -1,0 +1,35 @@
+﻿@model MatchDetailsViewModel
+
+<div>
+    <h3>@(Model.RadiantWin ? "Radiant win" : "Dire win")</h3>
+    <h4>Radiant score: @Model.RadiantScore</h4>
+    <h4>Dire score: @Model.DireScore</h4>
+    <h4>(@Model.GameMode +"/" + @Model.LobbyType)</h4>
+    <table>
+        <tr>
+            <th></th>
+        </tr>
+        @foreach (var player in Model.Players)
+        {
+            <tr>
+                <td><a asp-controller="players" asp-action="details" asp-route-id=@player.PlayerId>@player.PlayerName</a></td>
+                <td><img src=@player.Hero.ImageUrl alt=@player.Hero.Name /></td>
+                <td>@player.Kills</td>
+                <td>@player.Deaths</td>
+                <td>@player.Assists</td>
+                <td>@player.HeroDamageDone</td>
+                <td>@player.HealingDone</td>
+                <td>@player.GoldPerMin</td>
+                <td>@player.Level</td>
+                <td>
+                    @foreach (var item in player.Items)
+                    {
+                        <p>@item.Name</p>
+                        <p>@item.Description</p>
+                        <p>@item.Lore</p>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>

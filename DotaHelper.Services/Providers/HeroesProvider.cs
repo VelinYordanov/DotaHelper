@@ -26,7 +26,7 @@ namespace DotaHelper.Services.Providers
             this.httpClient = httpClient ?? throw new ArgumentException(nameof(httpClient));
             this.jsonSerializer = jsonSerializer ?? throw new ArgumentException(nameof(jsonSerializer));
             this.mapper = mapper ?? throw new ArgumentException(nameof(mapper));
-            this.cache = cache ?? throw new ArgumentException(nameof(cache));      
+            this.cache = cache ?? throw new ArgumentException(nameof(cache));
         }
 
         public async Task<IEnumerable<HeroDto>> GetAllHeroesAsync()
@@ -36,16 +36,14 @@ namespace DotaHelper.Services.Providers
                 await this.Refresh();
             }
 
+            this.cache.TryGetValue(HeroesCachingKey, out heroes);
             return heroes;
         }
 
         private async Task Refresh()
         {
             var heroes = await this.httpClient.GetAsync(DotaApiEndpoints.AllHeroesUrl);
-            var data = this.jsonSerializer.Deserialize<ICollection<HeroJsonModel>>(heroes);
-            var mappedHeroes = mapper.Map<IEnumerable<HeroDto>>(data);
-            this.cache.Set(HeroesCachingKey, mappedHeroes);
-            //this.heroIdsToHeroes = mappedHeroes.GroupBy(x => x.Id).ToDictionary(x => x.Key, x => x.First());
+            this.cache.Set(HeroesCachingKey, this.mapper.Map<IEnumerable<HeroDto>>(this.jsonSerializer.Deserialize<ICollection<HeroJsonModel>>(heroes)));
         }
 
         public async Task<HeroDto> GetHeroAsync(string id)

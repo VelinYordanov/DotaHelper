@@ -1,4 +1,5 @@
 ﻿using DotaHelper.Services.Commons.Interfaces;
+using DotaHelper.Web.Commons.JsonConverters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace DotaHelper.Web.Commons
 
         public T Deserialize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<T>(json, new ItemsConverter());
         }
     }
 }
