@@ -17,9 +17,12 @@ namespace DotaHelper.Services.Tests.PlayerServiceTests
         [Test]
         public async Task CallTheCorrectEndPointToGetTheData()
         {
-            var matchDetailsDto = new MatchDetailsDto();
-            matchDetailsDto.PicksAndBans = new List<PickOrBanDto>();
-            matchDetailsDto.Players = new List<MatchPlayerDto>();
+            var matchDetailsDto = new MatchDetailsDto
+            {
+                PicksAndBans = new List<PickOrBanDto>(),
+                Players = new List<MatchPlayerDto>()
+            };
+
             var httpClient = new Mock<IHttpClient>();
             var jsonSerializer = new Mock<IJsonSerializer>();
             var mapper = new Mock<IMapper>();

@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FE30874C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotaHelper.Services.Tests", "DotaHelper.Services.Tests\DotaHelper.Services.Tests.csproj", "{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHelper.Data", "DotaHelper.Data\DotaHelper.Data.csproj", "{9E22FFF0-3AD8-4488-B706-AC469FBA7CEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHelper.Data.Models", "DotaHelper.Data.Models\DotaHelper.Data.Models.csproj", "{4E213A47-C31A-4AAE-A5C7-E087957F4AAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1CDA462-48F4-42A8-8B54-B4DA8FACC6A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E22FFF0-3AD8-4488-B706-AC469FBA7CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E22FFF0-3AD8-4488-B706-AC469FBA7CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E22FFF0-3AD8-4488-B706-AC469FBA7CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E22FFF0-3AD8-4488-B706-AC469FBA7CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E213A47-C31A-4AAE-A5C7-E087957F4AAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E213A47-C31A-4AAE-A5C7-E087957F4AAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E213A47-C31A-4AAE-A5C7-E087957F4AAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E213A47-C31A-4AAE-A5C7-E087957F4AAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

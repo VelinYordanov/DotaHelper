@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotaHelper.Data.Models\DotaHelper.Data.Models.csproj" />
+    <ProjectReference Include="..\DotaHelper.Data\DotaHelper.Data.csproj" />
     <ProjectReference Include="..\DotaHelper.Services\DotaHelper.Services.csproj" />
     <ProjectReference Include="..\DotaHelper.Web.ViewModels\DotaHelper.Web.ViewModels.csproj" />
   </ItemGroup>

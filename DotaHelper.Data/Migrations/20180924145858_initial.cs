@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DotaHelper.Web.Data.Migrations
+namespace DotaHelper.Data.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -153,6 +153,57 @@ namespace DotaHelper.Web.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Guides",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatorId = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
+                    HeroId = table.Column<string>(nullable: false),
+                    Item1Id = table.Column<string>(nullable: false),
+                    Item2Id = table.Column<string>(nullable: false),
+                    Item3Id = table.Column<string>(nullable: false),
+                    Item4Id = table.Column<string>(nullable: false),
+                    Item5Id = table.Column<string>(nullable: false),
+                    Item6Id = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Guides", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Guides_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DotaHelperUserGuide",
+                columns: table => new
+                {
+                    DotaHelperUserId = table.Column<string>(nullable: false),
+                    GuideId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DotaHelperUserGuide", x => new { x.DotaHelperUserId, x.GuideId });
+                    table.ForeignKey(
+                        name: "FK_DotaHelperUserGuide_AspNetUsers_DotaHelperUserId",
+                        column: x => x.DotaHelperUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DotaHelperUserGuide_Guides_GuideId",
+                        column: x => x.GuideId,
+                        principalTable: "Guides",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +242,16 @@ namespace DotaHelper.Web.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DotaHelperUserGuide_GuideId",
+                table: "DotaHelperUserGuide",
+                column: "GuideId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Guides_CreatorId",
+                table: "Guides",
+                column: "CreatorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +272,13 @@ namespace DotaHelper.Web.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DotaHelperUserGuide");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Guides");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

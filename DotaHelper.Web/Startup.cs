@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DotaHelper.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
@@ -18,6 +17,8 @@ using DotaHelper.Web.Commons;
 using DotaHelper.Services.Interfaces;
 using DotaHelper.Services;
 using DotaHelper.Services.Providers;
+using DotaHelper.Data.Models;
+using DotaHelper.Data;
 
 namespace DotaHelper.Web
 {
@@ -47,11 +48,11 @@ namespace DotaHelper.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<DotaHelperDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    Configuration.GetConnectionString("DotaHelperDbConnection")));
+            services.AddDefaultIdentity<DotaHelperUser>()
+                .AddEntityFrameworkStores<DotaHelperDbContext>();
 
             services.AddMemoryCache();
             services.AddAutoMapper();
