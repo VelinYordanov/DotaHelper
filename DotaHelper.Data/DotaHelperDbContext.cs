@@ -1,4 +1,5 @@
-﻿using DotaHelper.Data.Models;
+﻿using DotaHelper.Data.Interfaces;
+using DotaHelper.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace DotaHelper.Data
 {
-    public class DotaHelperDbContext : IdentityDbContext<DotaHelperUser>
+    public class DotaHelperDbContext : IdentityDbContext<DotaHelperUser>, IDotaHelperDbContext
     {
         public DotaHelperDbContext(DbContextOptions<DotaHelperDbContext> dbContextOptions) : base(dbContextOptions)
         {

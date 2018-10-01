@@ -19,6 +19,8 @@ using DotaHelper.Services;
 using DotaHelper.Services.Providers;
 using DotaHelper.Data.Models;
 using DotaHelper.Data;
+using DotaHelper.Data.Interfaces;
+using DotaHelper.Data.Repositories;
 
 namespace DotaHelper.Web
 {
@@ -38,8 +40,15 @@ namespace DotaHelper.Web
             services.AddSingleton<IHttpClient, HttpClientAdapter>();
             services.AddSingleton<IJsonSerializer, JsonSerializer>();
             services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IDotaHelperData, DotaHelperData>();
+            services.AddScoped<IDotaHelperRepository<DotaHelperUser>, DotaHelperUserRepository>();
+            services.AddScoped<IDotaHelperRepository<Guide>, DotaHelperGuideRepository>();
+            services.AddScoped<IGuideData, GuideData>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IGuidesService, GuidesService>();
             services.AddScoped<IHeroesProvider, HeroesProvider>();
             services.AddScoped<IItemsProvider, ItemsProvider>();
+            services.AddScoped<IUserProvider, UserManagerAdapter>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -49,10 +58,19 @@ namespace DotaHelper.Web
             });
 
             services.AddDbContext<DotaHelperDbContext>(options =>
-                options.UseSqlServer(
+                options.UseLazyLoadingProxies()
+                .UseSqlServer(
                     Configuration.GetConnectionString("DotaHelperDbConnection")));
             services.AddDefaultIdentity<DotaHelperUser>()
                 .AddEntityFrameworkStores<DotaHelperDbContext>();
+
+            services.Configure<IdentityOptions>(ops =>
+            {
+                ops.Password.RequireDigit = false;
+                ops.Password.RequireUppercase = false;
+                ops.Password.RequireDigit = false;
+                ops.Password.RequireNonAlphanumeric = false;
+            });
 
             services.AddMemoryCache();
             services.AddAutoMapper();

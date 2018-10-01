@@ -1,7 +1,8 @@
 @using Microsoft.AspNetCore.Identity
+@using DotaHelper.Data.Models;
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<DotaHelperUser> SignInManager
+@inject UserManager<DotaHelperUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

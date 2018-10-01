@@ -21,7 +21,7 @@ namespace DotaHelper.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Search(string name)
+        public async Task<IActionResult> Search(string name)
         {
             var players = await this.playerService.SearchPlayersAsync(name);
             var result = new PlayerSearchViewModel { Players = players };
@@ -29,14 +29,14 @@ namespace DotaHelper.Web.Controllers
             return this.View(result);
         }
 
-        public async Task<ActionResult> Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
             var playerDetails = await this.playerService.GetPlayerDetailsAsync(id);
             var playerDetailsViewModel = this.mapper.Map<PlayerDetailsViewModel>(playerDetails);
             return this.View(playerDetailsViewModel);
         }
 
-        public async Task<ActionResult> Matches(string id)
+        public async Task<IActionResult> Matches(string id)
         {
             var matchDetails = await this.playerService.GetMatchDetailsAsync(id);
             var matchDetailsViewModel = this.mapper.Map<MatchDetailsViewModel>(matchDetails);

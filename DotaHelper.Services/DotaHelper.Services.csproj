@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DotaHelper.Data\DotaHelper.Data.csproj" />
     <ProjectReference Include="..\DotaHelper.JsonModels\DotaHelper.Models.csproj" />
   </ItemGroup>
 
