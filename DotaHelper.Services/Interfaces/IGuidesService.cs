@@ -11,5 +11,7 @@ namespace DotaHelper.Services.Interfaces
         Task AddGuide(string userId, GuidePostDataModel data);
 
         Task<GuidePostDataModel> GetCreateModel();
+
+        Task FavoriteGuide(string userId, string guideId);
     }
 }

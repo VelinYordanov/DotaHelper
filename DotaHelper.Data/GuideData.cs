@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DotaHelper.Data
 {
-    public class GuideData : DotaHelperGuideRepository, IGuideData
+    public class GuideData : DotaHelperRepository<Guide>, IGuideData
     {
         public GuideData(DotaHelperDbContext dbContext) :base(dbContext)
         {

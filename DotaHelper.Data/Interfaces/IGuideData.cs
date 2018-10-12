@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotaHelper.Data.Interfaces
 {
-    public interface IGuideData
+    public interface IGuideData : IDotaHelperRepository<Guide>
     {
         Task<IEnumerable<Guide>> GetPagedGuidesAsync(int skip, int take);
     }

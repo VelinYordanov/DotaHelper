@@ -30,6 +30,9 @@ namespace DotaHelper.Data
 
             base.OnModelCreating(builder);
         }
+
         public DbSet<Guide> Guides { get; set; }
+
+        public DbSet<DotaHelperUserGuide> UserGuides { get; set; }
     }
 }

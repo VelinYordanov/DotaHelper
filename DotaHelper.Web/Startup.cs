@@ -41,8 +41,9 @@ namespace DotaHelper.Web
             services.AddSingleton<IJsonSerializer, JsonSerializer>();
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<IDotaHelperData, DotaHelperData>();
-            services.AddScoped<IDotaHelperRepository<DotaHelperUser>, DotaHelperUserRepository>();
-            services.AddScoped<IDotaHelperRepository<Guide>, DotaHelperGuideRepository>();
+            services.AddScoped<IDotaHelperRepository<DotaHelperUser>, DotaHelperRepository<DotaHelperUser>>();
+            services.AddScoped<IDotaHelperRepository<Guide>, DotaHelperRepository<Guide>>();
+            services.AddScoped<IDotaHelperRepository<DotaHelperUserGuide>, DotaHelperRepository<DotaHelperUserGuide>>();
             services.AddScoped<IGuideData, GuideData>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IGuidesService, GuidesService>();

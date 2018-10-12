@@ -66,5 +66,14 @@ namespace DotaHelper.Web.Controllers
 
             return this.RedirectToAction("index", "home");
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Favorite(string id)
+        {
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            await this.guidesService.FavoriteGuide(user.Id, id);
+            return this.RedirectToAction("index", "guide", new { page = 1 });
+        }
     }
 }

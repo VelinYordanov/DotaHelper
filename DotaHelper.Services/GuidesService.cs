@@ -45,5 +45,23 @@ namespace DotaHelper.Services
             var model = new GuidePostDataModel { HeroIdsToNames = heroIdsToNames, ItemIdsToNames = itemIdsToItemNames };
             return model;
         }
+
+        public async Task FavoriteGuide(string userId, string guideId)
+        {
+            var user = await this.dotaHelperData.Users.FindAsync(userId);
+            var guide = await this.dotaHelperData.Guides.FindAsync(Guid.Parse(guideId));
+            var userGuide = new DotaHelperUserGuide { DotaHelperUserId = user.Id, GuideId = guide.Id, Guide = guide, User = user };
+
+            if (user.FavoritedGuides.Select(x=>x.Guide).Contains(guide))
+            {
+                //user.FavoritedGuides.Remove(guide);
+            }
+            else
+            {
+                this.dotaHelperData.UserGuides.Add(userGuide);
+            }
+
+            await this.dotaHelperData.SaveChangesAsync();
+        }
     }
 }

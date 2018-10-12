@@ -12,6 +12,8 @@ namespace DotaHelper.Data.Interfaces
 
         IGuideData Guides { get; }
 
+        IDotaHelperRepository<DotaHelperUserGuide> UserGuides { get; }
+
         Task SaveChangesAsync();
     }
 }
