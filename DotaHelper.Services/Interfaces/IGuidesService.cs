@@ -1,4 +1,5 @@
-﻿using DotaHelper.Models.PostModels;
+﻿using DotaHelper.Models.Dto;
+using DotaHelper.Models.PostModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,9 @@ namespace DotaHelper.Services.Interfaces
         Task<GuidePostDataModel> GetCreateModel();
 
         Task FavoriteGuide(string userId, string guideId);
+
+        Task<IEnumerable<GuideListDto>> GetGuidesAsync(int page);
+
+        Task<int> GetGuidesMaxPageAsync();
     }
 }

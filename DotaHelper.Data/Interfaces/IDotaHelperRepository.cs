@@ -15,5 +15,7 @@ namespace DotaHelper.Data.Interfaces
         Task<T> FindAsync(object id);
 
         IQueryable<T> All { get; }
+
+        Task<int> CountAsync();
     }
 }

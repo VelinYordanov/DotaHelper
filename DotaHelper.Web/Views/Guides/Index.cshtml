@@ -1,0 +1,11 @@
+﻿@model GuideListViewModel
+
+@foreach (var item in this.Model.Guides)
+{
+    <img src=@item.HeroImageUrl alt=@item.HeroId />
+    <h1>@item.Title</h1>
+}
+
+@for (int i = 1; i <=Model.MaxPage; i++)
+{
+}

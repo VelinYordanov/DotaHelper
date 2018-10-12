@@ -25,6 +25,6 @@ namespace DotaHelper.Data.Repositories
 
         public void Remove(T item) => this.entities.Remove(item);
 
-        public async Task<int> Count() => await this.entities.CountAsync();
+        public async Task<int> CountAsync() => await this.entities.CountAsync();
     }
 }

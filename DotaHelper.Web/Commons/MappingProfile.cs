@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DotaHelper.Data.Models;
 using DotaHelper.Models;
 using DotaHelper.Models.Dto;
 using DotaHelper.Models.Enums;
@@ -68,6 +69,8 @@ namespace DotaHelper.Web.Commons
             CreateMap<PickOrBanJsonModel, PickOrBanDto>();
 
             CreateMap<MatchDetailsDto, MatchDetailsViewModel>();
+
+            CreateMap<Guide, GuideListDto>();
         }
     }
 }

@@ -2,6 +2,7 @@
 using DotaHelper.Models.PostModels;
 using DotaHelper.Services.Commons.Interfaces;
 using DotaHelper.Services.Interfaces;
+using DotaHelper.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,17 @@ namespace DotaHelper.Web.Controllers
             this.itemsProvider = itemsProvider ?? throw new ArgumentException(nameof(itemsProvider));
             this.heroesProvider = heroesProvider ?? throw new ArgumentException(nameof(heroesProvider));
             this.userManager = userManager ?? throw new ArgumentException(nameof(userManager));
+        }
+
+        public async Task<IActionResult> Index(int page =1)
+        {
+            var maxPageTask = this.guidesService.GetGuidesMaxPageAsync();
+            var guidesTask = this.guidesService.GetGuidesAsync(page);
+
+            var maxPage = await maxPageTask;
+            var guides = await guidesTask;
+            var guidesListViewModel = new GuideListViewModel { MaxPage = maxPage, Guides = guides };
+            return this.View(guidesListViewModel);
         }
 
         [Authorize]
