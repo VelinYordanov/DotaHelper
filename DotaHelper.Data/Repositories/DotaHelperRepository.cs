@@ -19,19 +19,12 @@ namespace DotaHelper.Data.Repositories
 
         public IQueryable<T> All => this.entities;
 
-        public void Add(T item)
-        {
-            this.entities.Add(item);
-        }
+        public void Add(T item) => this.entities.Add(item);
 
-        public async Task<T> FindAsync(object id)
-        {
-            return await this.entities.FindAsync(id);
-        }
+        public async Task<T> FindAsync(object id) => await this.entities.FindAsync(id);
 
-        public void Remove(T item)
-        {
-            this.entities.Remove(item);
-        }
+        public void Remove(T item) => this.entities.Remove(item);
+
+        public async Task<int> Count() => await this.entities.CountAsync();
     }
 }
