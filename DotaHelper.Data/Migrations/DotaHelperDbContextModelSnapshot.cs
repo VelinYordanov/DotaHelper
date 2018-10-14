@@ -74,18 +74,18 @@ namespace DotaHelper.Data.Migrations
                 {
                     b.Property<string>("DotaHelperUserId");
 
-                    b.Property<Guid>("GuideId");
+                    b.Property<string>("GuideId");
 
                     b.HasKey("DotaHelperUserId", "GuideId");
 
                     b.HasIndex("GuideId");
 
-                    b.ToTable("DotaHelperUserGuide");
+                    b.ToTable("UserGuides");
                 });
 
             modelBuilder.Entity("DotaHelper.Data.Models.Guide", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatorId");

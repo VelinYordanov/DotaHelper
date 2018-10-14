@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DotaHelper.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -157,7 +157,7 @@ namespace DotaHelper.Data.Migrations
                 name: "Guides",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     CreatorId = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: false),
                     Text = table.Column<string>(nullable: false),
@@ -181,23 +181,23 @@ namespace DotaHelper.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DotaHelperUserGuide",
+                name: "UserGuides",
                 columns: table => new
                 {
                     DotaHelperUserId = table.Column<string>(nullable: false),
-                    GuideId = table.Column<Guid>(nullable: false)
+                    GuideId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DotaHelperUserGuide", x => new { x.DotaHelperUserId, x.GuideId });
+                    table.PrimaryKey("PK_UserGuides", x => new { x.DotaHelperUserId, x.GuideId });
                     table.ForeignKey(
-                        name: "FK_DotaHelperUserGuide_AspNetUsers_DotaHelperUserId",
+                        name: "FK_UserGuides_AspNetUsers_DotaHelperUserId",
                         column: x => x.DotaHelperUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DotaHelperUserGuide_Guides_GuideId",
+                        name: "FK_UserGuides_Guides_GuideId",
                         column: x => x.GuideId,
                         principalTable: "Guides",
                         principalColumn: "Id",
@@ -244,14 +244,14 @@ namespace DotaHelper.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DotaHelperUserGuide_GuideId",
-                table: "DotaHelperUserGuide",
-                column: "GuideId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Guides_CreatorId",
                 table: "Guides",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGuides_GuideId",
+                table: "UserGuides",
+                column: "GuideId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -272,7 +272,7 @@ namespace DotaHelper.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DotaHelperUserGuide");
+                name: "UserGuides");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

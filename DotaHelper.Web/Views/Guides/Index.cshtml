@@ -3,9 +3,10 @@
 @foreach (var item in this.Model.Guides)
 {
     <img src=@item.HeroImageUrl alt=@item.HeroId />
-    <h1>@item.Title</h1>
+    <h1><a asp-action="Details" asp-route-id=@item.Id>@item.Title</a></h1>
 }
 
-@for (int i = 1; i <=Model.MaxPage; i++)
+@for (int i = 1; i <= Model.MaxPage; i++)
 {
+    <a asp-controller="Guides" asp-route-page=@i>@i</a>
 }

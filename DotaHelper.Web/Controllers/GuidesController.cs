@@ -18,17 +18,19 @@ namespace DotaHelper.Web.Controllers
         private readonly IGuidesService guidesService;
         private readonly IItemsProvider itemsProvider;
         private readonly IHeroesProvider heroesProvider;
-        private readonly UserManager<DotaHelperUser> userManager;
+        private readonly IUserProvider userProvider;
+        private readonly IMapper mapper;
 
-        public GuidesController(IGuidesService guidesService, IItemsProvider itemsProvider, IHeroesProvider heroesProvider, UserManager<DotaHelperUser> userManager)
+        public GuidesController(IGuidesService guidesService, IItemsProvider itemsProvider, IHeroesProvider heroesProvider, IMapper mapper ,IUserProvider userProvider)
         {
             this.guidesService = guidesService ?? throw new ArgumentException(nameof(guidesService));
             this.itemsProvider = itemsProvider ?? throw new ArgumentException(nameof(itemsProvider));
             this.heroesProvider = heroesProvider ?? throw new ArgumentException(nameof(heroesProvider));
-            this.userManager = userManager ?? throw new ArgumentException(nameof(userManager));
+            this.mapper = mapper ?? throw new ArgumentException(nameof(mapper));
+            this.userProvider = userProvider ?? throw new ArgumentException(nameof(userProvider));
         }
 
-        public async Task<IActionResult> Index(int page =1)
+        public async Task<IActionResult> Index([FromQuery]int page =1)
         {
             var maxPageTask = this.guidesService.GetGuidesMaxPageAsync();
             var guidesTask = this.guidesService.GetGuidesAsync(page);
@@ -37,6 +39,13 @@ namespace DotaHelper.Web.Controllers
             var guides = await guidesTask;
             var guidesListViewModel = new GuideListViewModel { MaxPage = maxPage, Guides = guides };
             return this.View(guidesListViewModel);
+        }
+
+        public async Task<IActionResult> Details([FromRoute]string id)
+        {
+            var guide = await this.guidesService.GetGuideDetailsAsync(id);
+            var viewModel = this.mapper.Map<GuideDetailsViewModel>(guide);
+            return this.View(viewModel);
         }
 
         [Authorize]
@@ -73,7 +82,7 @@ namespace DotaHelper.Web.Controllers
                 return this.Redirect("/guides/create");
             }
 
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var user = await this.userProvider.GetCurrentUserAsync(this.HttpContext);
             await this.guidesService.AddGuide(user.Id, data);
 
             return this.RedirectToAction("index", "home");
@@ -83,9 +92,9 @@ namespace DotaHelper.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Favorite(string id)
         {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var user = await this.userProvider.GetCurrentUserAsync(this.HttpContext);
             await this.guidesService.FavoriteGuide(user.Id, id);
-            return this.RedirectToAction("index", "guide", new { page = 1 });
+            return this.RedirectToAction("index", "guides");
         }
     }
 }

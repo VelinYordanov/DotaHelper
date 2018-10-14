@@ -11,9 +11,9 @@ namespace DotaHelper.Web.Commons
 {
     public class UserManagerAdapter : IUserProvider
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<DotaHelperUser> userManager;
 
-        public UserManagerAdapter(UserManager<IdentityUser> userManager)
+        public UserManagerAdapter(UserManager<DotaHelperUser> userManager)
         {
             this.userManager = userManager ?? throw new ArgumentException(nameof(userManager));
         }

@@ -51,13 +51,20 @@ namespace DotaHelper.Services.Providers
                 return item;
             }
 
-            return (await this.GetAll()).SingleOrDefault(x => x.ItemId == id); ;
+            return (await this.GetAll()).SingleOrDefault(x => x.ItemId == id);
         }
 
         private async Task Refresh()
         {
             string itemData = await this.httpClient.GetAsync(DotaApiEndpoints.AllItemsUrl);
-            this.cache.Set(ItemsCacheKey, this.mapper.Map<IEnumerable<ItemDto>>(this.jsonSerializer.Deserialize<IEnumerable<ItemJsonModel>>(itemData)));
+            var items = this.mapper.Map<IEnumerable<ItemDto>>(this.jsonSerializer.Deserialize<IEnumerable<ItemJsonModel>>(itemData));
+            foreach (var item in items)
+            {
+                item.ImageUrl = string.Format(DotaApiEndpoints.ItemImageUrlTemplate, item.Image);
+            }
+
+            this.cache.Set(ItemsCacheKey, items);
+            //this.cache.Set(ItemsCacheKey, this.mapper.Map<IEnumerable<ItemDto>>(this.jsonSerializer.Deserialize<IEnumerable<ItemJsonModel>>(itemData)));
         }
     }
 }

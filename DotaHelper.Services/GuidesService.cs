@@ -53,6 +53,15 @@ namespace DotaHelper.Services
             return guidesList;
         }
 
+        public async Task<GuideDetailsDto> GetGuideDetailsAsync(object id)
+        {
+            var guide = await this.dotaHelperData.Guides.FindAsync(id);
+            var guideDetails = this.mapper.Map<GuideDetailsDto>(guide);
+            guideDetails.Items = await Task.WhenAll(guideDetails.ItemIds.Select(async x => await this.itemsProvider.GetItemById(x)));
+            guideDetails.Hero = await this.heroesProvider.GetHeroAsync(guideDetails.HeroId);
+            return guideDetails;
+        }
+
         public async Task AddGuide(string userId, GuidePostDataModel data)
         {
             var user = await this.dotaHelperData.Users.FindAsync(userId);
@@ -78,16 +87,16 @@ namespace DotaHelper.Services
         public async Task FavoriteGuide(string userId, string guideId)
         {
             var user = await this.dotaHelperData.Users.FindAsync(userId);
-            var guide = await this.dotaHelperData.Guides.FindAsync(Guid.Parse(guideId));
-            var userGuide = new DotaHelperUserGuide { DotaHelperUserId = user.Id, GuideId = guide.Id, Guide = guide, User = user };
-
-            if (user.FavoritedGuides.Select(x => x.Guide).Contains(guide))
+            var favorittedGuide = user.FavoritedGuides.SingleOrDefault(x => x.GuideId == guideId);
+            if (favorittedGuide == null)
             {
-                //user.FavoritedGuides.Remove(guide);
+                var guide = await this.dotaHelperData.Guides.FindAsync(Guid.Parse(guideId));
+                var userGuide = new DotaHelperUserGuide { DotaHelperUserId = user.Id, GuideId = guide.Id, Guide = guide, User = user };
+                this.dotaHelperData.UserGuides.Add(userGuide);
             }
             else
             {
-                this.dotaHelperData.UserGuides.Add(userGuide);
+                this.dotaHelperData.UserGuides.Remove(favorittedGuide);
             }
 
             await this.dotaHelperData.SaveChangesAsync();

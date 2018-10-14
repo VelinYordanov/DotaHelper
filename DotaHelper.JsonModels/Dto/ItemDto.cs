@@ -22,6 +22,8 @@ namespace DotaHelper.Models.Dto
 
         public int Cooldown { get; set; }
 
+        public string Image { get; set; }
+
         public string ImageUrl { get; set; }
     }
 }

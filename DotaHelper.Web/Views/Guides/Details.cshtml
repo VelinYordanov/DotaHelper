@@ -1,0 +1,16 @@
+﻿@model GuideDetailsViewModel
+
+<h1>@Model.Hero.Name</h1>
+<img src=@Model.Hero.ImageUrl alt=@Model.Hero.Name />
+<h3>@Model.Title</h3>
+@foreach (var item in Model.Items)
+{
+    <img src="@item.ImageUrl" alt="@item.Name" />
+}
+
+<form asp-action="favorite" asp-route-id=@Model.Id method="post">
+    @Html.HiddenFor(x => x.Id);
+    <button type="submit">Favorite</button>
+</form>
+
+<p>@Model.Text</p>

@@ -10,7 +10,7 @@ namespace DotaHelper.Data.Models
 
         public virtual DotaHelperUser User { get; set; }
 
-        public Guid GuideId { get; set; }
+        public string GuideId { get; set; }
 
         public virtual Guide Guide { get; set; }
     }

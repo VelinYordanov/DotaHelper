@@ -21,7 +21,7 @@ namespace DotaHelper.Data.Repositories
 
         public void Add(T item) => this.entities.Add(item);
 
-        public async Task<T> FindAsync(object id) => await this.entities.FindAsync(id);
+        public async Task<T> FindAsync(object id) => await this.entities.FindAsync(id.ToString());
 
         public void Remove(T item) => this.entities.Remove(item);
 

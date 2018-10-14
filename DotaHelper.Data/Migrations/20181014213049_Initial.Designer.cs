@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotaHelper.Data.Migrations
 {
     [DbContext(typeof(DotaHelperDbContext))]
-    [Migration("20180924145858_initial")]
-    partial class initial
+    [Migration("20181014213049_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,18 +76,18 @@ namespace DotaHelper.Data.Migrations
                 {
                     b.Property<string>("DotaHelperUserId");
 
-                    b.Property<Guid>("GuideId");
+                    b.Property<string>("GuideId");
 
                     b.HasKey("DotaHelperUserId", "GuideId");
 
                     b.HasIndex("GuideId");
 
-                    b.ToTable("DotaHelperUserGuide");
+                    b.ToTable("UserGuides");
                 });
 
             modelBuilder.Entity("DotaHelper.Data.Models.Guide", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatorId");

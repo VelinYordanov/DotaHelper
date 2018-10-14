@@ -8,11 +8,10 @@ namespace DotaHelper.Data.Models
     {
         public Guide()
         {
-            this.Id = Guid.NewGuid();
             this.Favorites = new HashSet<DotaHelperUserGuide>();
         }
 
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         public virtual DotaHelperUser Creator { get; set; }
 
