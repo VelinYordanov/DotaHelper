@@ -74,6 +74,12 @@ namespace DotaHelper.Web.Commons
 
             CreateMap<Guide, GuideDetailsDto>()
                 .ForMember(x => x.ItemIds, x => x.MapFrom(y => new List<string> { y.Item1Id, y.Item2Id, y.Item3Id, y.Item4Id, y.Item5Id, y.Item6Id }));
+
+            CreateMap<HeroesListJsonModel, HeroesListDto>()
+                .ForMember(x => x.ProWinRate, x => x.PreCondition(y => y.ProPick > 0))
+                .ForMember(x => x.ProWinRate, x => x.MapFrom(y => Math.Round((y.ProWins / y.ProPick), 2) * 100))
+                .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round(((y.Win1 + y.Win2 + y.Win3 + y.Win4 + y.Win5 + y.Win6 + y.Win7 + y.Win8) /
+                     (y.Pick1 + y.Pick2 + y.Pick3 + y.Pick4 + y.Pick5 + y.Pick6 + y.Pick7 + y.Pick8)), 2) * 100));
         }
     }
 }

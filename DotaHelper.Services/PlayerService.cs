@@ -92,10 +92,24 @@ namespace DotaHelper.Services
             foreach (var player in matchDetailsDto.Players)
             {
                 player.Hero = await this.heroesProvider.GetHeroAsync(player.HeroId);
-                player.Items = await Task.WhenAll(player.Items.Where(x => x.ItemId != "0").Select(async x => await this.itemsProvider.GetItemById(x.ItemId)).ToList());
+                var items = await this.itemsProvider.GetAllItemsAsync();
+                player.Items = player.Items.Where(x => x.ItemId != "0").Select(x => items.SingleOrDefault(y=>y.ItemId == x.ItemId)).ToList();
             }
 
             return matchDetailsDto;
+        }
+
+        public async Task<IEnumerable<HeroesListDto>> GetHeroesListDataAsync()
+        {
+            var heroes = await this.httpClient.GetAsync(DotaApiEndpoints.HeroesListUrl);
+            var heroesJsonModel = this.jsonSerializer.Deserialize<IEnumerable<HeroesListJsonModel>>(heroes);
+            var heroesDto =  this.mapper.Map<IEnumerable<HeroesListDto>>(heroesJsonModel);
+            foreach (var hero in heroesDto)
+            {
+                hero.Hero = await this.heroesProvider.GetHeroAsync(hero.Id);
+            }
+
+            return heroesDto;
         }
     }
 }

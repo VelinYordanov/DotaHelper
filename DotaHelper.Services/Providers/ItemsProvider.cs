@@ -28,7 +28,7 @@ namespace DotaHelper.Services.Providers
             this.cache = cache;
         }
 
-        public async Task<IEnumerable<ItemDto>> GetAll()
+        public async Task<IEnumerable<ItemDto>> GetAllItemsAsync()
         {
             if (!this.cache.TryGetValue(ItemsCacheKey, out List<ItemDto> items))
             {
@@ -39,9 +39,9 @@ namespace DotaHelper.Services.Providers
             return items;
         }
 
-        public async Task<ItemDto> GetItemById(string id)
+        public async Task<ItemDto> GetItemAsync(string id)
         {
-            var item = (await this.GetAll()).SingleOrDefault(x => x.ItemId == id);
+            var item = (await this.GetAllItemsAsync()).SingleOrDefault(x => x.ItemId == id);
             if (item == null)
             {
                 await this.Refresh();
@@ -51,7 +51,7 @@ namespace DotaHelper.Services.Providers
                 return item;
             }
 
-            return (await this.GetAll()).SingleOrDefault(x => x.ItemId == id);
+            return (await this.GetAllItemsAsync()).SingleOrDefault(x => x.ItemId == id);
         }
 
         private async Task Refresh()

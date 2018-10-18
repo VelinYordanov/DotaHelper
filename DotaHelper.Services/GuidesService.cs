@@ -57,7 +57,8 @@ namespace DotaHelper.Services
         {
             var guide = await this.dotaHelperData.Guides.FindAsync(id);
             var guideDetails = this.mapper.Map<GuideDetailsDto>(guide);
-            guideDetails.Items = await Task.WhenAll(guideDetails.ItemIds.Select(async x => await this.itemsProvider.GetItemById(x)));
+            var items = await this.itemsProvider.GetAllItemsAsync();
+            guideDetails.Items = guideDetails.ItemIds.Select(x => items.SingleOrDefault(y => y.ItemId == x));
             guideDetails.Hero = await this.heroesProvider.GetHeroAsync(guideDetails.HeroId);
             return guideDetails;
         }
@@ -73,7 +74,7 @@ namespace DotaHelper.Services
 
         public async Task<GuidePostDataModel> GetCreateModel()
         {
-            var itemsTask = this.itemsProvider.GetAll();
+            var itemsTask = this.itemsProvider.GetAllItemsAsync();
             var heroesTask = this.heroesProvider.GetAllHeroesAsync();
             var items = await itemsTask;
             var heroes = await heroesTask;

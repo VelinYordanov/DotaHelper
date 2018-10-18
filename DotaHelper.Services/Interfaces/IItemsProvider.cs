@@ -8,8 +8,8 @@ namespace DotaHelper.Services.Interfaces
 {
     public interface IItemsProvider
     {
-        Task<IEnumerable<ItemDto>> GetAll();
+        Task<IEnumerable<ItemDto>> GetAllItemsAsync();
 
-        Task<ItemDto> GetItemById(string id);
+        Task<ItemDto> GetItemAsync(string id);
     }
 }

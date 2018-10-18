@@ -1,0 +1,17 @@
+﻿@model HeroesListViewModel
+
+<table>
+    <tr>
+        <th>Hero</th>
+        <th>Pro win rate</th>
+        <th>Win rate</th>
+    </tr>
+    @foreach (var hero in this.Model.Heroes)
+    {
+        <tr>
+            <td><img src="@hero.Hero.ImageUrl" alt="@hero.Hero.Name" /></td>
+            <td>@(hero.ProWinRate)</td>
+            <td>@hero.WinRate</td>
+        </tr>
+    }
+</table>

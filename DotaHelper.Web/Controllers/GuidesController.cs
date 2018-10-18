@@ -21,7 +21,7 @@ namespace DotaHelper.Web.Controllers
         private readonly IUserProvider userProvider;
         private readonly IMapper mapper;
 
-        public GuidesController(IGuidesService guidesService, IItemsProvider itemsProvider, IHeroesProvider heroesProvider, IMapper mapper ,IUserProvider userProvider)
+        public GuidesController(IGuidesService guidesService, IItemsProvider itemsProvider, IHeroesProvider heroesProvider, IMapper mapper, IUserProvider userProvider)
         {
             this.guidesService = guidesService ?? throw new ArgumentException(nameof(guidesService));
             this.itemsProvider = itemsProvider ?? throw new ArgumentException(nameof(itemsProvider));
@@ -30,7 +30,7 @@ namespace DotaHelper.Web.Controllers
             this.userProvider = userProvider ?? throw new ArgumentException(nameof(userProvider));
         }
 
-        public async Task<IActionResult> Index([FromQuery]int page =1)
+        public async Task<IActionResult> Index([FromQuery]int page = 1)
         {
             var maxPageTask = this.guidesService.GetGuidesMaxPageAsync();
             var guidesTask = this.guidesService.GetGuidesAsync(page);
@@ -61,8 +61,8 @@ namespace DotaHelper.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(GuidePostDataModel data)
         {
-            var itemsTasks = new List<string> { data.Item1, data.Item2, data.Item3, data.Item4, data.Item5, data.Item6 }.Select(async x => await this.itemsProvider.GetItemById(x)).ToList();
-            var items = (await Task.WhenAll(itemsTasks)).ToList();
+            var allItems = await this.itemsProvider.GetAllItemsAsync();
+            var items = new List<string> { data.Item1, data.Item2, data.Item3, data.Item4, data.Item5, data.Item6 }.Select(x => allItems.SingleOrDefault(y => y.ItemId == x)).ToList();
             foreach (var item in items)
             {
                 if (item == null)
