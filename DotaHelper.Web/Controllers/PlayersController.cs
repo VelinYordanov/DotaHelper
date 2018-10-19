@@ -49,5 +49,12 @@ namespace DotaHelper.Web.Controllers
             var heroesListViewModel = new HeroesListViewModel { Heroes = heroes };
             return this.View(heroesListViewModel);
         }
+
+        public async Task<IActionResult> HeroDetails(string id)
+        {
+            var heroDetails = await this.playerService.GetHeroDetailsAsync(id);
+            var heroDetailsViewModel = this.mapper.Map<HeroDetailsViewModel>(heroDetails);
+            return this.View(heroDetailsViewModel);
+        }
     }
 }

@@ -4,16 +4,14 @@ using System.Text;
 
 namespace DotaHelper.Models.Dto
 {
-    public class PlayerProfileDetailsDto
+    public class RankingDto
     {
         public string AccountId { get; set; }
 
-        public string RankTier { get; set; }
-
-        public string AvatarUrl { get; set; }
-
         public string Name { get; set; }
 
-        public string SteamProfile { get; set; }
+        public string Avatar { get; set; }
+
+        public double Score { get; set; }
     }
 }

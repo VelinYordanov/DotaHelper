@@ -16,6 +16,9 @@ namespace DotaHelper.Models.JsonModels
 
     public class Profile
     {
+        [JsonProperty("account_id")]
+        public string AccountId { get; set; }
+
         [JsonProperty("avatar")]
         public string AvatarUrl { get; set; }
 

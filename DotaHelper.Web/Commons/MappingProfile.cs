@@ -80,6 +80,20 @@ namespace DotaHelper.Web.Commons
                 .ForMember(x => x.ProWinRate, x => x.MapFrom(y => Math.Round((y.ProWins / y.ProPick), 2) * 100))
                 .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round(((y.Win1 + y.Win2 + y.Win3 + y.Win4 + y.Win5 + y.Win6 + y.Win7 + y.Win8) /
                      (y.Pick1 + y.Pick2 + y.Pick3 + y.Pick4 + y.Pick5 + y.Pick6 + y.Pick7 + y.Pick8)), 2) * 100));
+
+            CreateMap<HeroDetailsDto, HeroDetailsViewModel>();
+
+            CreateMap<HeroesPlayersJsonModel, HeroesPlayersDto>()
+                .ForMember(x => x.WinRate, x => x.PreCondition(y => y.GamesPlayed > 0))
+                .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round((y.Wins / y.GamesPlayed), 2) * 100));
+
+            CreateMap<HeroMatchupsJsonModel, HeroMatchupsDto>()
+                .ForMember(x => x.WinRate, x => x.PreCondition(y => y.GamesPlayed > 0))
+                .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round((y.Wins / y.GamesPlayed), 2) * 100));
+
+            CreateMap<HeroRankingsJsonModel, IEnumerable<RankingDto>>()
+                .ConstructUsing(x => x.Rankings.Select(y => new RankingDto { AccountId = y.AccountId, Avatar = y.Avatar, Name = y.Name, Score = y.Score }).ToList());
         }
     }
 }
+

@@ -1,0 +1,24 @@
+﻿@model HeroDetailsViewModel
+
+<h1>@Model.Hero.Name</h1>
+<img src="@Model.Hero.ImageUrl" alt="@Model.Hero.Name" />
+
+@foreach (var matchup in Model.Matchups)
+{
+    <h1>@matchup.HeroDto.Name</h1>
+    <img src="@matchup.HeroDto.ImageUrl" alt="@matchup.HeroDto.Name" />
+    <h3>@matchup.GamesPlayed</h3>
+    <h3>@matchup.WinRate</h3>
+}
+
+@foreach (var ranking in Model.Rankings)
+{
+    @ranking.Score
+}
+
+@foreach (var player in Model.Players)
+{
+    <hr />
+    <h1>GamesPlayed: @player.GamesPlayed</h1>
+    <h1>Win rate: @player.WinRate</h1>
+}

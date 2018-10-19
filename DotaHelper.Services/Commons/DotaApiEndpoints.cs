@@ -27,5 +27,11 @@ namespace DotaHelper.Services.Commons
         public const string ItemImageUrlTemplate = "http://cdn.dota2.com/apps/dota2/images/items/{0}";
 
         public const string HeroesListUrl = "https://api.opendota.com/api/heroStats";
+
+        public const string HeroesRankingsUrlTemplate = "https://api.opendota.com/api/rankings?hero_id={0}";
+
+        public const string HeroesPlayersUrlTemplate = "https://api.opendota.com/api/heroes/{0}/players";
+
+        public const string HeroesMatchupsUrlTemplate = "https://api.opendota.com/api/heroes/{0}/matchups";
     }
 }
