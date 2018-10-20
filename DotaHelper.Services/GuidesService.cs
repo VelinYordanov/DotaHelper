@@ -91,7 +91,7 @@ namespace DotaHelper.Services
             var favorittedGuide = user.FavoritedGuides.SingleOrDefault(x => x.GuideId == guideId);
             if (favorittedGuide == null)
             {
-                var guide = await this.dotaHelperData.Guides.FindAsync(Guid.Parse(guideId));
+                var guide = await this.dotaHelperData.Guides.FindAsync(guideId);
                 var userGuide = new DotaHelperUserGuide { DotaHelperUserId = user.Id, GuideId = guide.Id, Guide = guide, User = user };
                 this.dotaHelperData.UserGuides.Add(userGuide);
             }
