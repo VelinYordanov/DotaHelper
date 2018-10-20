@@ -86,10 +86,10 @@ namespace DotaHelper.Services
                 pickOrBan.Hero = await this.heroesProvider.GetHeroAsync(pickOrBan.HeroId);
             }
 
+            var items = await this.itemsProvider.GetAllItemsAsync();
             foreach (var player in matchDetailsDto.Players)
             {
-                player.Hero = await this.heroesProvider.GetHeroAsync(player.HeroId);
-                var items = await this.itemsProvider.GetAllItemsAsync();
+                player.Hero = await this.heroesProvider.GetHeroAsync(player.HeroId);                
                 player.Items = player.Items.Where(x => x.ItemId != "0").Select(x => items.SingleOrDefault(y => y.ItemId == x.ItemId)).ToList();
             }
 
