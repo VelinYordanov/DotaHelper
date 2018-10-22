@@ -101,8 +101,14 @@ namespace DotaHelper.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "heroes",
+                    template: "heroes",
+                    defaults: new { controller = "Players", action = "Heroes" });                    
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }

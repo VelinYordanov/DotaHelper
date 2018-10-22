@@ -22,7 +22,7 @@ namespace DotaHelper.Models.JsonModels
         [JsonProperty("avatar")]
         public string AvatarUrl { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("personaname")]
         public string Name { get; set; }
 
         [JsonProperty("profileurl")]

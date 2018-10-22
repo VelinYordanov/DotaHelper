@@ -6,8 +6,10 @@ namespace DotaHelper.Models.Dto
 {
     public class PlayerWinsLossesDto
     {
-        public string Wins { get; set; }
+        public double Wins { get; set; }
 
-        public string Losses { get; set; }
+        public double Losses { get; set; }
+
+        public double WinRate { get; set; }
     }
 }

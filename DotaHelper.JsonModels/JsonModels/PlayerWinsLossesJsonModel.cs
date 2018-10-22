@@ -8,9 +8,9 @@ namespace DotaHelper.Models.JsonModels
     public class PlayerWinsLossesJsonModel
     {
         [JsonProperty("win")]
-        public string Wins { get; set; }
+        public double Wins { get; set; }
 
         [JsonProperty("lose")]
-        public string Losses { get; set; }
+        public double Losses { get; set; }
     }
 }

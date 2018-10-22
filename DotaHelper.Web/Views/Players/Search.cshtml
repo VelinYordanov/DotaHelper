@@ -1,7 +1,22 @@
 ﻿@model PlayerSearchViewModel
-
-@foreach (var item in this.Model.Players)
+@if (Model.Players.Any())
 {
-    <h1>@item.Name</h1>
-    <img src=@item.AvatarUrl alt=@item.Name />
+    <h1 class="text-center text-white">Players found:</h1>
+    <section class="search-players">
+        @foreach (var item in this.Model.Players)
+        {
+            <article>
+                <a href="/players/details/@item.AccountId">
+                    <h5 class="text-white">@item.Name</h5>
+                    <img src=@item.AvatarUrl alt=@item.Name />
+                </a>
+            </article>
+        }
+    </section>
 }
+else
+{
+    <h1 class="text-center text-white">No players found!</h1>
+}
+
+

@@ -1,5 +1,18 @@
 ﻿@model PlayerDetailsViewModel
 
+<section class="player-details text-white">
+    <article>
+        <div>
+            <h3>@Model.Details.Name</h3>
+            <img src="@Model.Details.AvatarUrl" alt="@Model.Details.Name" />
+        </div>
+        <div>
+            <p>Wins: <span class="text-success">@Model.WinsAndLosses.Wins</span></p>
+            <p>Losses: <span class="text-danger">@Model.WinsAndLosses.Losses</span></p>
+            <p>Win Rate: @Model.WinsAndLosses.WinRate</p>
+        </div>
+    </article>
+</section>
 <p>@Model.Details.Name</p>
 <p>@Model.Details.RankTier</p>
 <p>@Model.WinsAndLosses.Wins</p>

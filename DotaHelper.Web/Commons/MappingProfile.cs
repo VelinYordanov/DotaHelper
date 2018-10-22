@@ -31,7 +31,6 @@ namespace DotaHelper.Web.Commons
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.Profile.Name))
                 .ForMember(x => x.SteamProfile, x => x.MapFrom(y => y.Profile.SteamProfile));
 
-            CreateMap<PlayerWinsLossesJsonModel, PlayerWinsLossesDto>();
 
             CreateMap<PlayerHeroesJsonModel, PlayerHeroesDto>()
                 .ForMember(x => x.GamesLost, x => x.MapFrom(y => y.GamesPlayed - y.GamesWon))
@@ -47,7 +46,8 @@ namespace DotaHelper.Web.Commons
 
             CreateMap<PlayerDetailsDto, PlayerDetailsViewModel>();
 
-            CreateMap<PlayerWinsLossesJsonModel, PlayerWinsLossesDto>();
+            CreateMap<PlayerWinsLossesJsonModel, PlayerWinsLossesDto>()
+                .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round(((y.Wins / (y.Wins + y.Losses)) * 100),2)));
 
             CreateMap<MatchPlayerJsonModel, MatchPlayerDto>()
                 .ForMember(x => x.Items, x => x.MapFrom(y => new List<ItemDto>
