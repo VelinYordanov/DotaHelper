@@ -39,15 +39,17 @@ namespace DotaHelper.Web.Commons
             CreateMap<PlayerRecentMatchesJsonModel, PlayerRecentMatchesDto>()
                 .ForMember(x => x.GameMode, x => x.MapFrom(y => (GameMode)y.Game))
                 .ForMember(x => x.LobbyType, x => x.MapFrom(y => (LobbyType)y.Lobby))
+                .ForMember(x => x.Duration, x => x.MapFrom(y => (int)TimeSpan.FromSeconds(y.Duration).TotalMinutes + ":" + TimeSpan.FromSeconds(y.Duration).Seconds))
+
 
                 //https://wiki.teamfortress.com/wiki/WebAPI/GetMatchHistory#Player_Slot
-                .ForMember(x => x.Team, x => x.MapFrom(y => y.PlayerSlot > 128 ? DireTeam : RadiantTeam))
-                .ForMember(x => x.WonGame, x => x.MapFrom(y => y.RadiantWin ? y.PlayerSlot <= 128 : y.PlayerSlot > 128));
+                .ForMember(x => x.Team, x => x.MapFrom(y => y.PlayerSlot >= 128 ? DireTeam : RadiantTeam))
+                .ForMember(x => x.WonGame, x => x.MapFrom(y => y.RadiantWin ? y.PlayerSlot < 128 : y.PlayerSlot >= 128));
 
             CreateMap<PlayerDetailsDto, PlayerDetailsViewModel>();
 
             CreateMap<PlayerWinsLossesJsonModel, PlayerWinsLossesDto>()
-                .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round(((y.Wins / (y.Wins + y.Losses)) * 100),2)));
+                .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round(((y.Wins / (y.Wins + y.Losses)) * 100), 2)));
 
             CreateMap<MatchPlayerJsonModel, MatchPlayerDto>()
                 .ForMember(x => x.Items, x => x.MapFrom(y => new List<ItemDto>
@@ -64,9 +66,11 @@ namespace DotaHelper.Web.Commons
 
             CreateMap<MatchDetailsJsonModel, MatchDetailsDto>()
                 .ForMember(x => x.GameMode, x => x.MapFrom(y => (GameMode)y.Game))
-                .ForMember(x => x.LobbyType, x => x.MapFrom(y => (LobbyType)y.Lobby));
+                .ForMember(x => x.LobbyType, x => x.MapFrom(y => (LobbyType)y.Lobby))
+                .ForMember(x => x.Duration, x => x.MapFrom(y => (int)TimeSpan.FromSeconds(y.Duration).TotalMinutes + ":" + TimeSpan.FromSeconds(y.Duration).Seconds));
 
-            CreateMap<PickOrBanJsonModel, PickOrBanDto>();
+            CreateMap<PickOrBanJsonModel, PickOrBanDto>()
+                 .ForMember(x => x.IsRadiant, x => x.MapFrom(y => y.Team == 0));
 
             CreateMap<MatchDetailsDto, MatchDetailsViewModel>();
 

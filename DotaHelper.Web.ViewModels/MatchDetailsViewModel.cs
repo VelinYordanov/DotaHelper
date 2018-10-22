@@ -14,13 +14,11 @@ namespace DotaHelper.Web.ViewModels
 
         public int RadiantScore { get; set; }
 
-        public int LastHits { get; set; }
-
         public int DireScore { get; set; }
 
         public bool RadiantWin { get; set; }
 
-        public int Duration { get; set; }
+        public string Duration { get; set; }
 
         public ICollection<PickOrBanDto> PicksAndBans { get; set; }
 

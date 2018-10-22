@@ -19,7 +19,7 @@ namespace DotaHelper.Models.Dto
 
         public bool RadiantWin { get; set; }
 
-        public int Duration { get; set; }
+        public string Duration { get; set; }
 
         public ICollection<PickOrBanDto> PicksAndBans { get; set; }
 

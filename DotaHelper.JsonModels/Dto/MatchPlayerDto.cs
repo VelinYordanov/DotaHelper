@@ -10,6 +10,8 @@ namespace DotaHelper.Models.Dto
 
         public string PlayerName { get; set; }
 
+        public string PlayerRanking { get; set; }
+
         public string HeroId { get; set; }
 
         public HeroDto Hero { get; set; }
@@ -29,6 +31,8 @@ namespace DotaHelper.Models.Dto
         public int Deaths { get; set; }
 
         public int Assists { get; set; }
+
+        public int LastHits { get; set; }
 
         public int Denies { get; set; }
 

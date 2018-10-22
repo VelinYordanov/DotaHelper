@@ -12,5 +12,11 @@ namespace DotaHelper.Models.JsonModels
 
         [JsonProperty("is_pick")]
         public bool IsPicked { get; set; }
+
+        [JsonProperty("team")]
+        public int Team { get; set; }
+
+        [JsonProperty("order")]
+        public int Order { get; set; }
     }
 }

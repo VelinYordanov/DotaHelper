@@ -10,6 +10,10 @@ namespace DotaHelper.Models.Dto
 
         public bool IsPicked { get; set; }
 
+        public bool IsRadiant { get; set; }
+
+        public int Order { get; set; }
+
         public HeroDto Hero { get; set; }
     }
 }

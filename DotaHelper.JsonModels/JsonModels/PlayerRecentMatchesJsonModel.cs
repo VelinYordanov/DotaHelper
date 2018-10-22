@@ -12,7 +12,7 @@ namespace DotaHelper.Models.JsonModels
         public string MatchId { get; set; }
 
         [JsonProperty("duration")]
-        public string Duration { get; set; }
+        public double Duration { get; set; }
 
         [JsonProperty("hero_id")]
         public string HeroId { get; set; }

@@ -1,35 +1,126 @@
 ﻿@model MatchDetailsViewModel
 
-<div>
-    <h3>@(Model.RadiantWin ? "Radiant win" : "Dire win")</h3>
-    <h4>Radiant score: @Model.RadiantScore</h4>
-    <h4>Dire score: @Model.DireScore</h4>
-    <h4>(@Model.GameMode +"/" + @Model.LobbyType)</h4>
-    <table>
-        <tr>
-            <th></th>
-        </tr>
-        @foreach (var player in Model.Players)
-        {
+<section class="match-details text-white">
+    <div>
+        <h1>@(Model.RadiantWin ? "Radiant victory" : "Dire victory")</h1>
+    </div>
+    <div>
+        <span class="text-success">@Model.RadiantScore</span>
+        <span>@Model.Duration</span>
+        <span>@Model.GameMode</span>
+        <span class="text-danger">@Model.DireScore</span>
+    </div>
+    <h1 class="text-center">Radiant:</h1>
+    <table class="table table-dark">
+        <thead>
             <tr>
-                <td><a asp-controller="players" asp-action="details" asp-route-id=@player.PlayerId>@player.PlayerName</a></td>
-                <td><img src=@player.Hero.ImageUrl alt=@player.Hero.Name /></td>
-                <td>@player.Kills</td>
-                <td>@player.Deaths</td>
-                <td>@player.Assists</td>
-                <td>@player.HeroDamageDone</td>
-                <td>@player.HealingDone</td>
-                <td>@player.GoldPerMin</td>
-                <td>@player.Level</td>
-                <td>
-                    @foreach (var item in player.Items)
-                    {
-                        <p>@item.Name</p>
-                        <p>@item.Description</p>
-                        <p>@item.Lore</p>
-                    }
-                </td>
+                <th>Player</th>
+                <th>Level</th>
+                <th class="text-success">Kills</th>
+                <th class="text-danger">Deaths</th>
+                <th>Assists</th>
+                <th>Last hits</th>
+                <th>Denies</th>
+                <th>Hero damage done</th>
+                <th>Gold per min</th>
+                <th>Items</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var player in Model.Players.Where(x => x.IsRadiant).ToList())
+            {
+                <tr>
+                    <td>
+                        <a href="/players/details/@player.PlayerId" class="text-white">
+                            <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                            <span>@(player.PlayerName ?? "Anonymous")</span>
+                            <span>@(player.PlayerRanking ?? "Unknown")</span>
+                        </a>
+                    </td>
+                    <td>@player.Level</td>
+                    <td class="text-success">@player.Kills</td>
+                    <td class="text-danger">@player.Deaths</td>
+                    <td>@player.Assists</td>
+                    <td>@player.LastHits</td>
+                    <td>@player.Denies</td>
+                    <td>@player.HeroDamageDone</td>
+                    <td>@player.GoldPerMin</td>
+                    <td>
+                        @foreach (var item in player.Items)
+                        {
+                            <img src="@item.ImageUrl" alt="@item.Name" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
-</div>
+
+    @if (this.Model.PicksAndBans.Any())
+    {
+        <div class="text-center">
+            @foreach (var pickOrBan in this.Model.PicksAndBans.Where(x => x.IsRadiant).OrderBy(x => x.Order).ToList())
+            {
+                <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
+                <span>@((pickOrBan.IsPicked ? "pick" : "ban") + ((pickOrBan.Order) + 1))</span>
+            }
+        </div>
+    }
+
+    <h1 class="text-center">Dire:</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Level</th>
+                <th class="text-success">Kills</th>
+                <th class="text-danger">Deaths</th>
+                <th>Assists</th>
+                <th>Last hits</th>
+                <th>Denies</th>
+                <th>Hero damage done</th>
+                <th>Gold per min</th>
+                <th>Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var player in Model.Players.Where(x => !x.IsRadiant).ToList())
+            {
+                <tr>
+                    <td>
+                        <a href="/players/details/@player.PlayerId" class="text-white">
+                            <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                            <span>@(player.PlayerName ?? "Anonymous")</span>
+                            <span>@(player.PlayerRanking ?? "Unknown")</span>
+                        </a>
+                    </td>
+                    <td>@player.Level</td>
+                    <td class="text-success">@player.Kills</td>
+                    <td class="text-danger">@player.Deaths</td>
+                    <td>@player.Assists</td>
+                    <td>@player.LastHits</td>
+                    <td>@player.Denies</td>
+                    <td>@player.HeroDamageDone</td>
+                    <td>@player.GoldPerMin</td>
+                    <td>
+                        @foreach (var item in player.Items)
+                        {
+                            <img src="@item.ImageUrl" alt="@item.Name" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (this.Model.PicksAndBans.Any())
+    {
+        <div class="text-center">
+            @foreach (var pickOrBan in this.Model.PicksAndBans.Where(x => !x.IsRadiant).OrderBy(x => x.Order).ToList())
+            {
+                <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
+                <span>@((pickOrBan.IsPicked ? "pick" : "ban") + (pickOrBan.Order + 1))</span>
+            }
+        </div>
+    }
+</section>

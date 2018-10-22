@@ -13,6 +13,9 @@ namespace DotaHelper.Models.JsonModels
         [JsonProperty("personaname")]
         public string PlayerName { get; set; }
 
+        [JsonProperty("rank_tier")]
+        public string PlayerRanking { get; set; }
+
         [JsonProperty("hero_id")]
         public string HeroId { get; set; }
 
@@ -57,6 +60,9 @@ namespace DotaHelper.Models.JsonModels
 
         [JsonProperty("denies")]
         public int Denies { get; set; }
+
+        [JsonProperty("last_hits")]
+        public int LastHits { get; set; }
 
         [JsonProperty("isRadiant")]
         public bool IsRadiant { get; set; }

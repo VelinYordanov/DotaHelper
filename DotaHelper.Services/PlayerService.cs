@@ -13,7 +13,7 @@ namespace DotaHelper.Services
 {
     public class PlayerService : IPlayerService
     {
-        private const int NumberOfBestHeroesToShow = 5;
+        private const int NumberOfBestHeroesToShow = 10;
 
         private readonly IHttpClient httpClient;
         private readonly IJsonSerializer jsonSerializer;

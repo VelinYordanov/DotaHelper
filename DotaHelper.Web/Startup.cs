@@ -99,16 +99,21 @@ namespace DotaHelper.Web
             app.UseAuthentication();
 
             app.UseMvc(routes =>
-            {
+            {              
+                routes.MapRoute(
+                    name: "hero-details",
+                    template: "heroes/{id}",
+                    defaults: new { controller = "Players", action = "HeroDetails" });
+
                 routes.MapRoute(
                     name: "heroes",
                     template: "heroes",
-                    defaults: new { controller = "Players", action = "Heroes" });                    
+                    defaults: new { controller = "Players", action = "Heroes" });
 
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                
+
             });
         }
     }
