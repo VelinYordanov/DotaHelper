@@ -12,8 +12,14 @@ namespace DotaHelper.Models.Dto
 
         public string AvatarUrl { get; set; }
 
+        public string AvatarFullUrl { get; set; }
+
         public string Name { get; set; }
 
         public string SteamProfile { get; set; }
+
+        public string RankingImageUrl { get; set; }
+
+        public string RankingImageStarsUrl { get; set; }
     }
 }

@@ -33,5 +33,9 @@ namespace DotaHelper.Services.Commons
         public const string HeroesPlayersUrlTemplate = "https://api.opendota.com/api/heroes/{0}/players";
 
         public const string HeroesMatchupsUrlTemplate = "https://api.opendota.com/api/heroes/{0}/matchups";
+
+        public const string PlayersRankingImageUrlTemplate = "https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_{0}.png";
+
+        public const string PlayersRankingStarImageUrlTemplate = "https://www.opendota.com/assets/images/dota2/rank_icons/rank_star_{0}.png";
     }
 }

@@ -1,15 +1,28 @@
 ﻿@model MatchDetailsViewModel
 
 <section class="match-details text-white">
-    <div>
-        <h1>@(Model.RadiantWin ? "Radiant victory" : "Dire victory")</h1>
-    </div>
-    <div>
-        <span class="text-success">@Model.RadiantScore</span>
-        <span>@Model.Duration</span>
-        <span>@Model.GameMode</span>
-        <span class="text-danger">@Model.DireScore</span>
-    </div>
+    <article class="text-center mt-5 mb-5">
+        <div class="mb-5">
+            @if (Model.RadiantWin)
+            {
+                <h1 class="text-success font-weight-bold">Radiant Victory</h1>
+            }
+            else
+            {
+                <h1 class="text-danger font-weight-bold">Dire Victory</h1>
+            }
+        </div>
+        <div class="d-inline-block">
+            <h1 class="text-success font-weight-bold">@Model.RadiantScore</h1>
+        </div>
+        <div class="d-inline-block align-middle ml-3 mr-3">
+            <h4>@Model.Duration</h4>
+            <h3>@Model.GameMode</h3>
+        </div>
+        <div class="d-inline-block">
+            <h1 class="text-danger font-weight-bold">@Model.DireScore</h1>
+        </div>
+    </article>
     <h1 class="text-center">Radiant:</h1>
     <table class="table table-dark">
         <thead>
@@ -31,11 +44,28 @@
             {
                 <tr>
                     <td>
-                        <a href="/players/details/@player.PlayerId" class="text-white">
-                            <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
-                            <span>@(player.PlayerName ?? "Anonymous")</span>
-                            <span>@(player.PlayerRanking ?? "Unknown")</span>
-                        </a>
+                        @if (player.PlayerId != null)
+                        {
+                            <a href="/players/details/@player.PlayerId" class="text-white">
+                                <div>
+                                    <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                                    <div class="align-middle d-inline-block">
+                                        <h3>@(player.PlayerName ?? "Anonymous")</h3>
+                                        <h5 class="font-weight-light">@(player.PlayerRanking ?? "Unknown")</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
+                            <div class="match-player text-white">
+                                <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                                <div class="align-middle">
+                                    <h3>@(player.PlayerName ?? "Anonymous")</h3>
+                                    <h5 class="font-weight-light">@(player.PlayerRanking ?? "Unknown")</h5>
+                                </div>
+                            </div>
+                        }
                     </td>
                     <td>@player.Level</td>
                     <td class="text-success">@player.Kills</td>
@@ -61,13 +91,16 @@
         <div class="text-center">
             @foreach (var pickOrBan in this.Model.PicksAndBans.Where(x => x.IsRadiant).OrderBy(x => x.Order).ToList())
             {
-                <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
-                <span>@((pickOrBan.IsPicked ? "pick" : "ban") + ((pickOrBan.Order) + 1))</span>
+                <div class="d-inline-block">
+                    <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
+                    <h5 class="text-uppercase font-weight-light">@((pickOrBan.IsPicked ? "pick" : "ban") + ((pickOrBan.Order) + 1))</h5>
+                </div>
             }
         </div>
     }
 
-    <h1 class="text-center">Dire:</h1>
+
+    <h1 class="text-center mt-5">Dire:</h1>
     <table class="table table-dark">
         <thead>
             <tr>
@@ -88,11 +121,29 @@
             {
                 <tr>
                     <td>
-                        <a href="/players/details/@player.PlayerId" class="text-white">
-                            <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
-                            <span>@(player.PlayerName ?? "Anonymous")</span>
-                            <span>@(player.PlayerRanking ?? "Unknown")</span>
-                        </a>
+                        @if (player.PlayerId != null)
+                        {
+                            <a href="/players/details/@player.PlayerId" class="text-white">
+                                <div class="match-player">
+                                    <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                                    <div class="align-middle">
+                                        <h3>@(player.PlayerName ?? "Anonymous")</h3>
+                                        <h5 class="font-weight-light">@(player.PlayerRanking ?? "Unknown")</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
+                            <div class="text-white">
+                                <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                                <div class="align-middle d-inline-block">
+                                    <h3>@(player.PlayerName ?? "Anonymous")</h3>
+                                    <h5 class="font-weight-light">@(player.PlayerRanking ?? "Unknown")</h5>
+                                </div>
+                            </div>
+                        }
+
                     </td>
                     <td>@player.Level</td>
                     <td class="text-success">@player.Kills</td>
@@ -118,8 +169,10 @@
         <div class="text-center">
             @foreach (var pickOrBan in this.Model.PicksAndBans.Where(x => !x.IsRadiant).OrderBy(x => x.Order).ToList())
             {
-                <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
-                <span>@((pickOrBan.IsPicked ? "pick" : "ban") + (pickOrBan.Order + 1))</span>
+                <div class="d-inline-block">
+                    <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
+                    <h5 class="text-uppercase font-weight-light">@((pickOrBan.IsPicked ? "pick" : "ban") + ((pickOrBan.Order) + 1))</h5>
+                </div>
             }
         </div>
     }

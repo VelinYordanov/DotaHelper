@@ -24,5 +24,8 @@ namespace DotaHelper.Models.JsonModels
 
         [JsonProperty("score")]
         public double Score { get; set; }
+
+        [JsonProperty("rank_tier")]
+        public string RankTier { get; set; }
     }
 }

@@ -1,17 +1,26 @@
 ﻿@model HeroesListViewModel
 
-<table>
-    <tr>
-        <th>Hero</th>
-        <th>Pro win rate</th>
-        <th>Win rate</th>
-    </tr>
-    @foreach (var hero in this.Model.Heroes)
-    {
+<table class="table table-dark">
+    <thead>
         <tr>
-            <td><img src="@hero.Hero.ImageUrl" alt="@hero.Hero.Name" /></td>
-            <td>@(hero.ProWinRate)</td>
-            <td>@hero.WinRate</td>
+            <th>Hero</th>
+            <th>Pro Win Rate</th>
+            <th>Win Rate</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var hero in Model.Heroes)
+        {
+            <tr>
+                <td>
+                    <a class="text-white" href="/heroes/@hero.Hero.Id">
+                        <img src=@hero.Hero.ImageUrl alt=@hero.Hero.Name />
+                        <span>@hero.Hero.Name</span>
+                    </a>
+                </td>
+                <td>@hero.ProWinRate</td>
+                <td>@hero.WinRate</td>
+            </tr>
+        }
+    </tbody>
 </table>

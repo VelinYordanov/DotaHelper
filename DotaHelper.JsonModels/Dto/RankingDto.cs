@@ -13,5 +13,7 @@ namespace DotaHelper.Models.Dto
         public string Avatar { get; set; }
 
         public double Score { get; set; }
+
+        public string RankTier { get; set; }
     }
 }

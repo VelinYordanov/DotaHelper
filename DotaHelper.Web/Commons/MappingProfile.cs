@@ -29,7 +29,11 @@ namespace DotaHelper.Web.Commons
             CreateMap<PlayerDetailsJsonModel, PlayerProfileDetailsDto>()
                 .ForMember(x => x.AvatarUrl, x => x.MapFrom(y => y.Profile.AvatarUrl))
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.Profile.Name))
-                .ForMember(x => x.SteamProfile, x => x.MapFrom(y => y.Profile.SteamProfile));
+                .ForMember(x => x.SteamProfile, x => x.MapFrom(y => y.Profile.SteamProfile))
+                .ForMember(x => x.AccountId, x => x.MapFrom(y => y.Profile.AccountId))
+                .ForMember(x => x.AvatarFullUrl, x => x.MapFrom(y => y.Profile.AvatarFullUrl))
+                .ForMember(x => x.RankingImageUrl, x => x.MapFrom(y => string.Format(DotaApiEndpoints.PlayersRankingImageUrlTemplate, y.RankTier.ToCharArray()[0])))
+                .ForMember(x => x.RankingImageStarsUrl, x => x.MapFrom(y => string.Format(DotaApiEndpoints.PlayersRankingStarImageUrlTemplate, y.RankTier.ToCharArray()[1])));
 
 
             CreateMap<PlayerHeroesJsonModel, PlayerHeroesDto>()
@@ -60,7 +64,8 @@ namespace DotaHelper.Web.Commons
                     new ItemDto{ ItemId = y.Item4Id},
                     new ItemDto{ ItemId = y.Item5Id},
                     new ItemDto{ ItemId = y.Item6Id},
-                }));
+                }))
+                .ForMember(x => x.PlayerRanking, x => x.MapFrom(y => (Rank)(int)Char.GetNumericValue(y.PlayerRanking.ToCharArray()[0]) + "[" + y.PlayerRanking.ToCharArray()[1] + "]"));
 
             CreateMap<ItemJsonModel, ItemDto>();
 

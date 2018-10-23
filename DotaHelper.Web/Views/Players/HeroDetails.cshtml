@@ -3,22 +3,79 @@
 <h1>@Model.Hero.Name</h1>
 <img src="@Model.Hero.ImageUrl" alt="@Model.Hero.Name" />
 
-@foreach (var matchup in Model.Matchups)
-{
-    <h1>@matchup.HeroDto.Name</h1>
-    <img src="@matchup.HeroDto.ImageUrl" alt="@matchup.HeroDto.Name" />
-    <h3>@matchup.GamesPlayed</h3>
-    <h3>@matchup.WinRate</h3>
-}
+<h1 class="text-center">Matchups:</h1>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Hero</th>
+            <th>Games played</th>
+            <th>Win Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hero in Model.Matchups)
+        {
+            <tr>
+                <td>
+                    <a class="text-white" href="/heroes/@hero.HeroDto.Id">
+                        <img src=@hero.HeroDto.ImageUrl alt=@hero.HeroDto.Name />
+                        <span>@hero.HeroDto.Name</span>                        
+                    </a>
+                </td>
+                <td>@hero.GamesPlayed</td>
+                <td>@hero.WinRate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Games Played</th>
+            <th>Win Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model.Players)
+        {
+            <tr>
+                <td>
+                    <a href="/player/details/@player.PlayerProfile.AccountId">
+                        <img src="@player.PlayerProfile.AvatarUrl" alt="@player.PlayerProfile.Name" />
+                        <span>@player.PlayerProfile.Name</span>
+                    </a>
+                </td>
+                <td>@player.GamesPlayed</td>
+                <td>@player.WinRate</td>
+            </tr>
 
-@foreach (var ranking in Model.Rankings)
-{
-    @ranking.Score
-}
+        }
+    </tbody>
+</table>
 
-@foreach (var player in Model.Players)
-{
-    <hr />
-    <h1>GamesPlayed: @player.GamesPlayed</h1>
-    <h1>Win rate: @player.WinRate</h1>
-}
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model.Rankings)
+        {
+            <tr>
+                <td>
+                    <a href="/player/details/@player.AccountId">
+                        <img src="@player.Avatar" alt="@player.Name" />
+                        <span>@player.Name</span>
+                        <span>@player.RankTier</span>
+                    </a>
+                </td>
+                <td>@player.Score</td>
+            </tr>
+
+        }
+    </tbody>
+</table>

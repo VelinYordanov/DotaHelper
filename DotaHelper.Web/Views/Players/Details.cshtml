@@ -1,88 +1,95 @@
 ﻿@model PlayerDetailsViewModel
 
 <section class="player-details text-white">
-    <article>
-        <div>
+    <article class="text-center ml-5 mt-5 lead font-weight-bold">
+        <div class="d-inline-block">
             <h3>@Model.Details.Name</h3>
-            <img src="@Model.Details.AvatarUrl" alt="@Model.Details.Name" />
+            <img src="@Model.Details.AvatarFullUrl" alt="@Model.Details.Name" />
         </div>
-        <div>
+        <div class="align-middle d-inline-block">
             <p>Wins: <span class="text-success">@Model.WinsAndLosses.Wins</span></p>
             <p>Losses: <span class="text-danger">@Model.WinsAndLosses.Losses</span></p>
             <p>Win Rate: @Model.WinsAndLosses.WinRate</p>
-            @* RANK TIER IMAGES *@
         </div>
-        <h3 class="text-center">Top heroes:</h3>
-        <table class="table table-dark">
-            <thead>
-                <tr>
-                    <th>Hero</th>
-                    <th>Total games</th>
-                    <th>Win Rate</th>
-                    <th>Wins</th>
-                    <th>Losses</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var hero in Model.Heroes)
-                {
-                    <tr>
-                        <td>
-                            <a class="text-white" href="/heroes/@hero.Hero.Id">
-                                <img src=@hero.Hero.ImageUrl alt=@hero.Hero.Name />
-                                <span>@hero.Hero.Name</span>
-                            </a>                            
-                        </td>
-                        <td>@hero.GamesPlayed</td>
-                        <td>@hero.WinRate</td>
-                        <td>@hero.GamesWon</td>
-                        <td>@hero.GamesLost</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <h3>Recent matches:</h3>
-        <table class="table table-dark">
-            <thead>
-                <tr>
-                    <th>Hero</th>
-                    <th>Result</th>
-                    <th>Game type</th>
-                    <th>Duration</th>
-                    <th>Kills</th>
-                    <th>Deaths</th>
-                    <th>Assists</th>
-                    <th>Hero Damage</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var match in Model.RecentMatchHistory)
-                {
-                    <tr>
-                        <td>
-                            <a href="/players/matches/@match.MatchId" class="text-white">
-                                <img src=@match.Hero.ImageUrl alt=@match.Hero.Name />
-                                <span>@match.Hero.Name</span>
-                            </a>
-                        </td>
-                        @if (match.WonGame)
-                        {
-                            <td class="text-success">Victory</td>
-                        }
-                        else
-                        {
-                            <td class="text-danger">Defeat</td>
-                        }
+        @if (Model.Details.RankTier != null)
+        {
+            <div class="ml-3 d-inline-block">
+                <img src="@Model.Details.RankingImageUrl" alt="player ranking" />
+                <img class="ranking-stars" src="@Model.Details.RankingImageStarsUrl" alt="player ranking" />
+            </div>
+        }
 
-                        <td>@(match.GameMode + "/" + match.LobbyType)</td>
-                        <td>@(match.Duration)</td>
-                        <td>@match.Kills</td>
-                        <td>@match.Deaths</td>
-                        <td>@match.Assists</td>
-                        <td>@match.HeroDamageDone</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </article>
+    <h3 class="text-center">Top heroes:</h3>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Hero</th>
+                <th>Total games</th>
+                <th>Win Rate</th>
+                <th>Wins</th>
+                <th>Losses</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hero in Model.Heroes)
+            {
+                <tr>
+                    <td>
+                        <a class="text-white" href="/heroes/@hero.Hero.Id">
+                            <img src=@hero.Hero.ImageUrl alt=@hero.Hero.Name />
+                            <span>@hero.Hero.Name</span>
+                        </a>
+                    </td>
+                    <td>@hero.GamesPlayed</td>
+                    <td>@hero.WinRate</td>
+                    <td>@hero.GamesWon</td>
+                    <td>@hero.GamesLost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h3 class="text-center mt-5">Recent matches:</h3>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Hero</th>
+                <th>Result</th>
+                <th>Game type</th>
+                <th>Duration</th>
+                <th>Kills</th>
+                <th>Deaths</th>
+                <th>Assists</th>
+                <th>Hero Damage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in Model.RecentMatchHistory)
+            {
+                <tr>
+                    <td>
+                        <a href="/players/matches/@match.MatchId" class="text-white">
+                            <img src=@match.Hero.ImageUrl alt=@match.Hero.Name />
+                            <span>@match.Hero.Name</span>
+                        </a>
+                    </td>
+                    @if (match.WonGame)
+                    {
+                        <td class="text-success">Victory</td>
+                    }
+                    else
+                    {
+                        <td class="text-danger">Defeat</td>
+                    }
+
+                    <td>@(match.GameMode + "/" + match.LobbyType)</td>
+                    <td>@(match.Duration)</td>
+                    <td class="text-success">@match.Kills</td>
+                    <td class="text-danger">@match.Deaths</td>
+                    <td>@match.Assists</td>
+                    <td>@match.HeroDamageDone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </section>
