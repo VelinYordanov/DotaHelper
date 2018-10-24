@@ -33,5 +33,11 @@ namespace DotaHelper.Models.JsonModels
 
         [JsonProperty("img")]
         public string Image { get; set; }
+
+        [JsonProperty("qual")]
+        public string Quality { get; set; }
+
+        [JsonProperty("notes")]
+        public string Notes { get; set; }
     }
 }

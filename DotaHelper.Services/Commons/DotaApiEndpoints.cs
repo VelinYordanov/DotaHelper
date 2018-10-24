@@ -37,5 +37,11 @@ namespace DotaHelper.Services.Commons
         public const string PlayersRankingImageUrlTemplate = "https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_{0}.png";
 
         public const string PlayersRankingStarImageUrlTemplate = "https://www.opendota.com/assets/images/dota2/rank_icons/rank_star_{0}.png";
+
+        public const string GoldIconUrl = "http://cdn.dota2.com/apps/dota2/images/tooltips/gold.png";
+
+        public const string ManaIconUrl = "http://cdn.dota2.com/apps/dota2/images/tooltips/mana.png";
+
+        public const string CooldownIconUrl = "http://cdn.dota2.com/apps/dota2/images/tooltips/cooldown.png";
     }
 }

@@ -25,5 +25,9 @@ namespace DotaHelper.Models.Dto
         public string Image { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public string Quality { get; set; }
+
+        public string Notes { get; set; }
     }
 }
