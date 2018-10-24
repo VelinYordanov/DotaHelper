@@ -79,7 +79,8 @@ namespace DotaHelper.Web.Commons
 
             CreateMap<MatchDetailsDto, MatchDetailsViewModel>();
 
-            CreateMap<Guide, GuideListDto>();
+            CreateMap<Guide, GuideListDto>()
+                .ForMember(x => x.ItemIds, x => x.MapFrom(y => new List<string> { y.Item1Id, y.Item2Id, y.Item3Id, y.Item4Id, y.Item5Id, y.Item6Id }));
 
             CreateMap<Guide, GuideDetailsDto>()
                 .ForMember(x => x.ItemIds, x => x.MapFrom(y => new List<string> { y.Item1Id, y.Item2Id, y.Item3Id, y.Item4Id, y.Item5Id, y.Item6Id }));

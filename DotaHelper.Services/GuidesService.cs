@@ -45,9 +45,11 @@ namespace DotaHelper.Services
             var take = ElementsPerPage;
             var guides = await this.dotaHelperData.Guides.GetPagedGuidesAsync(skip, take);
             var guidesList = this.mapper.Map<IEnumerable<GuideListDto>>(guides);
+            var items = await this.itemsProvider.GetAllItemsAsync();
             foreach (var item in guidesList)
             {
                 item.HeroImageUrl = (await this.heroesProvider.GetHeroAsync(item.HeroId)).ImageUrl;
+                item.Items = item.ItemIds.Select(x => items.SingleOrDefault(y => y.ItemId == x)).ToList();
             }
 
             return guidesList;
