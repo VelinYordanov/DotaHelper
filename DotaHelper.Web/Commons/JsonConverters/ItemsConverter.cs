@@ -33,7 +33,11 @@ namespace DotaHelper.Web.Commons.JsonConverters
                         Cost = item["cost"].ToString(),
                         Description = item["desc"].ToString(),
                         Lore = item["lore"].ToString(),
-                        Image = item["img"].ToString()
+                        Image = item["img"].ToString(),
+                        Cooldown = item["cd"].ToString(),
+                        ManaCost = item["mc"].ToString(),
+                        Notes = item["notes"].ToString(),
+                        Quality = item["qual"].ToString()
                     };
 
                     result.Add(itemData);

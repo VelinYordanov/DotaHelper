@@ -78,6 +78,7 @@
                     <td class="dota-items">
                         @foreach (var item in player.Items)
                         {
+                            <img class="dota-item-image" src="@item.ImageUrl" alt="@item.Name" />
                             <div class="iconTooltip iconTooltip_item dota-item">
                                 <div class="itemIcon"><img src="@item.ImageUrl" alt="@item.Name" title="@item.Name"></div>
                                 <div class="itemName @item.Quality">@item.Name</div>
@@ -89,17 +90,25 @@
                                 <div class="description">@Html.Raw(item.Description)</div>
                                 <div class="notes">@Html.Raw(item.Notes)</div>
                                 <div class="attribs">@Html.Raw(item.Attributes)</div>
-                                <div class="cooldownMana">
-                                    <div class="mana">
-                                        <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl" width="22" height="22" border="0">@item.ManaCost
+                                @if (!(item.ManaCost == "False" && item.Cooldown == "False"))
+                                {
+                                    <div class="cooldownMana">
+                                        @if (item.ManaCost != "False")
+                                        {
+                                            <div class="mana">
+                                                <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl">@item.ManaCost
+                                            </div>
+                                        }
+                                        @if (item.Cooldown != "False")
+                                        {
+                                            <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl">@item.Cooldown
+                                            <br clear="left">
+                                            <br clear="left">
+                                        }
                                     </div>
-                                    <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl" width="22" height="22" border="0">@item.
-                                    <br clear="left">
-                                    <br clear="left">
-                                </div>
+                                }
                                 <div class="lore">@item.Lore</div>
                             </div>
-                            <img class="dota-item-image" src="@item.ImageUrl" alt="@item.Name" />
                         }
                     </td>
                 </tr>
@@ -177,6 +186,7 @@
                     <td class="dota-items">
                         @foreach (var item in player.Items)
                         {
+                            <img class="dota-item-image" src="@item.ImageUrl" alt="@item.Name" />
                             <div class="iconTooltip iconTooltip_item dota-item">
                                 <div class="itemIcon"><img src="@item.ImageUrl" alt="@item.Name" title="@item.Name"></div>
                                 <div class="itemName @item.Quality">@item.Name</div>
@@ -188,17 +198,25 @@
                                 <div class="description">@Html.Raw(item.Description)</div>
                                 <div class="notes">@Html.Raw(item.Notes)</div>
                                 <div class="attribs">@Html.Raw(item.Attributes)</div>
-                                <div class="cooldownMana">
-                                    <div class="mana">
-                                        <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl" width="22" height="22" border="0">@item.ManaCost
+                                @if (!(item.ManaCost == "False" && item.Cooldown == "False"))
+                                {
+                                    <div class="cooldownMana">
+                                        @if (item.ManaCost != "False")
+                                        {
+                                            <div class="mana">
+                                                <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl">@item.ManaCost
+                                            </div>
+                                        }
+                                        @if (item.Cooldown != "False")
+                                        {
+                                            <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl">@item.Cooldown
+                                            <br clear="left">
+                                            <br clear="left">
+                                        }
                                     </div>
-                                    <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl" width="22" height="22" border="0">@item.
-                                    <br clear="left">
-                                    <br clear="left">
-                                </div>
+                                }
                                 <div class="lore">@item.Lore</div>
                             </div>
-                            <img class="dota-item-image" src="@item.ImageUrl" alt="@item.Name" />
                         }
                     </td>
                 </tr>

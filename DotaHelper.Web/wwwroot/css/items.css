@@ -1,9 +1,8 @@
 ﻿/*Copied from the official Dota 2 website*/
 
 .iconTooltip {
-    position: absolute;
+    position: fixed;
     text-align: left;
-    float: left;
     border: solid #000 1px;
     background-color: #111;
     width: 337px;
@@ -20,6 +19,10 @@
         display: none !important;
     }
 
+    .iconTooltip h1 {
+        font-size: 1rem;
+        font-weight: bold;
+    }
 /* specific tooltip style changes for item/ability/hero types */
 .iconTooltip_item {
 }
@@ -36,7 +39,7 @@
     float: left;
     width: 74px;
     height: 56px;
-    margin-right: 4px;
+    margin-right: 30px;
 }
 
 .iconTooltip .itemName {
@@ -96,6 +99,11 @@
     float: left;
     margin: 2px 4px 0 0;
 }
+
+    .iconTooltip .goldIcon img {
+        width: 25px;
+        height: 17px;
+    }
 
 .iconTooltip .goldCost {
     font-weight: bold;
@@ -165,6 +173,8 @@
     margin: 0 6px 0 0;
     display: block;
     float: left;
+    width: 22px;
+    height: 22px;
 }
 
 #itemsHeader .itemName {

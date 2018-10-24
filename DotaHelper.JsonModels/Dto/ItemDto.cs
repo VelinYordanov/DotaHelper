@@ -18,9 +18,9 @@ namespace DotaHelper.Models.Dto
 
         public string Attributes { get; set; }
 
-        public int ManaCost { get; set; }
+        public string ManaCost { get; set; }
 
-        public int Cooldown { get; set; }
+        public string Cooldown { get; set; }
 
         public string Image { get; set; }
 

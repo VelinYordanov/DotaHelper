@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DotaHelper.Models.JsonModels
 {
+    //This item is being deserialized with a custom ItemsConverter. To change deserialization you need to edit the file.
     public class ItemJsonModel
     {
         [JsonProperty("id")]
@@ -26,10 +27,10 @@ namespace DotaHelper.Models.JsonModels
         public string Attributes { get; set; }
 
         [JsonProperty("mc")]
-        public int ManaCost { get; set; }
+        public string ManaCost { get; set; }
 
         [JsonProperty("cd")]
-        public int Cooldown { get; set; }
+        public string Cooldown { get; set; }
 
         [JsonProperty("img")]
         public string Image { get; set; }
