@@ -78,36 +78,8 @@
                     <td class="dota-items">
                         @foreach (var item in player.Items)
                         {
-                            <img class="dota-item-image" src="@item.ImageUrl" alt="@item.Name" />
-                            <div class="iconTooltip iconTooltip_item dota-item">
-                                <div class="itemIcon"><img src="@item.ImageUrl" alt="@item.Name" title="@item.Name"></div>
-                                <div class="itemName @item.Quality">@item.Name</div>
-                                <div class="goldIcon">
-                                    <img src="@DotaApiEndpoints.GoldIconUrl" alt="gold icon" />
-                                </div>
-                                <div class="goldCost">@item.Cost</div>
-                                <br clear="left">
-                                <div class="description">@Html.Raw(item.Description)</div>
-                                <div class="notes">@Html.Raw(item.Notes)</div>
-                                <div class="attribs">@Html.Raw(item.Attributes)</div>
-                                @if (!(item.ManaCost == "False" && item.Cooldown == "False"))
-                                {
-                                    <div class="cooldownMana">
-                                        @if (item.ManaCost != "False")
-                                        {
-                                            <div class="mana">
-                                                <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl">@item.ManaCost
-                                            </div>
-                                        }
-                                        @if (item.Cooldown != "False")
-                                        {
-                                            <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl">@item.Cooldown
-                                            <br clear="left">
-                                            <br clear="left">
-                                        }
-                                    </div>
-                                }
-                                <div class="lore">@item.Lore</div>
+                            <div class="d-inline-block">
+                                @await Html.PartialAsync("GuidePartial", item);
                             </div>
                         }
                     </td>
@@ -131,7 +103,7 @@
 
 
     <h1 class="text-center mt-5">Dire:</h1>
-    <table class="table table-dark">
+    <table class="table table-dark mb-5">
         <thead>
             <tr>
                 <th>Player</th>
@@ -186,36 +158,8 @@
                     <td class="dota-items">
                         @foreach (var item in player.Items)
                         {
-                            <img class="dota-item-image" src="@item.ImageUrl" alt="@item.Name" />
-                            <div class="iconTooltip iconTooltip_item dota-item">
-                                <div class="itemIcon"><img src="@item.ImageUrl" alt="@item.Name" title="@item.Name"></div>
-                                <div class="itemName @item.Quality">@item.Name</div>
-                                <div class="goldIcon">
-                                    <img src="@DotaApiEndpoints.GoldIconUrl" alt="gold icon" />
-                                </div>
-                                <div class="goldCost">@item.Cost</div>
-                                <br clear="left">
-                                <div class="description">@Html.Raw(item.Description)</div>
-                                <div class="notes">@Html.Raw(item.Notes)</div>
-                                <div class="attribs">@Html.Raw(item.Attributes)</div>
-                                @if (!(item.ManaCost == "False" && item.Cooldown == "False"))
-                                {
-                                    <div class="cooldownMana">
-                                        @if (item.ManaCost != "False")
-                                        {
-                                            <div class="mana">
-                                                <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl">@item.ManaCost
-                                            </div>
-                                        }
-                                        @if (item.Cooldown != "False")
-                                        {
-                                            <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl">@item.Cooldown
-                                            <br clear="left">
-                                            <br clear="left">
-                                        }
-                                    </div>
-                                }
-                                <div class="lore">@item.Lore</div>
+                            <div class="d-inline-block">
+                                @await Html.PartialAsync("GuidePartial", item);
                             </div>
                         }
                     </td>

@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1 class="text-white text-center">Favorited guides:</h1>
+@foreach (var guide in Model.FavoritedGuides)
+{
+    <div>
+        <div class="d-inline-block">
+            <img src=@guide.HeroImageUrl alt=@guide.HeroId />
+        </div>
+        <div class="d-inline-block">
+            <h1><a class="text-white" asp-action="Details" asp-route-id=@guide.Id>@guide.Title</a></h1>
+        </div>
+        <div class="d-inline-block">
+            @foreach (var item in guide.Items)
+            {
+                @await Html.PartialAsync("GuidePartial", item);
+            }
+        </div>
+    </div>
+}
+
+<h1 class="text-white text-center">Posted guides:</h1>
+@foreach (var guide in Model.PostedGuides)
+{
+    <div>
+        <div class="d-inline-block">
+            <img src=@guide.HeroImageUrl alt=@guide.HeroId />
+        </div>
+        <div class="d-inline-block">
+            <h1><a class="text-white" asp-action="Details" asp-route-id=@guide.Id>@guide.Title</a></h1>
+        </div>
+        <div class="d-inline-block">
+            @foreach (var item in guide.Items)
+            {
+                @await Html.PartialAsync("GuidePartial", item);
+            }
+        </div>
+    </div>
+}

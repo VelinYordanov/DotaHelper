@@ -1,0 +1,33 @@
+﻿@model ItemDto
+
+<img class="dota-item-image" src="@Model.ImageUrl" alt="@Model.Name" />
+<div class="iconTooltip iconTooltip_item dota-item">
+    <div class="itemIcon"><img src="@Model.ImageUrl" alt="@Model.Name" title="@Model.Name"></div>
+    <div class="itemName @Model.Quality">@Model.Name</div>
+    <div class="goldIcon">
+        <img src="@DotaApiEndpoints.GoldIconUrl" alt="gold icon" />
+    </div>
+    <div class="goldCost">@Model.Cost</div>
+    <br clear="left">
+    <div class="description">@Html.Raw(Model.Description)</div>
+    <div class="notes">@Html.Raw(Model.Notes)</div>
+    <div class="attribs">@Html.Raw(Model.Attributes)</div>
+    @if (!(Model.ManaCost == "False" && Model.Cooldown == "False"))
+    {
+        <div class="cooldownMana">
+            @if (Model.ManaCost != "False")
+            {
+                <div class="mana">
+                    <img alt="Needed mana" title="Needed mana" class="manaImg" src="@DotaApiEndpoints.ManaIconUrl">@Model.ManaCost
+                </div>
+            }
+            @if (Model.Cooldown != "False")
+            {
+                <img alt="Cooldown" title="Cooldown" class="cooldownImg" src="@DotaApiEndpoints.CooldownIconUrl">@Model.Cooldown
+                <br clear="left">
+                <br clear="left">
+            }
+        </div>
+    }
+    <div class="lore">@Model.Lore</div>
+</div>
