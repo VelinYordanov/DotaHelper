@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MatchPlayerDto>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Level</th>
+            <th class="text-success">Kills</th>
+            <th class="text-danger">Deaths</th>
+            <th>Assists</th>
+            <th>Last hits</th>
+            <th>Denies</th>
+            <th>Hero damage done</th>
+            <th>Gold per min</th>
+            <th>Items</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model)
+        {
+            <tr>
+                <td>
+                    @if (player.PlayerId != null)
+                    {
+                        <a href="/players/details/@player.PlayerId" class="text-white">
+                            <div>
+                                <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                                <div class="align-middle d-inline-block">
+                                    <h3>@(player.PlayerName ?? "Anonymous")</h3>
+                                    <h5 class="font-weight-light">@(player.PlayerRanking ?? "Unknown")</h5>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="match-player text-white">
+                            <img src="@player.Hero.ImageUrl" alt="@player.Hero.Name" />
+                            <div class="align-middle d-inline-block">
+                                <h3>@(player.PlayerName ?? "Anonymous")</h3>
+                                <h5 class="font-weight-light">@(player.PlayerRanking ?? "Unknown")</h5>
+                            </div>
+                        </div>
+                    }
+                </td>
+                <td>@player.Level</td>
+                <td class="text-success">@player.Kills</td>
+                <td class="text-danger">@player.Deaths</td>
+                <td>@player.Assists</td>
+                <td>@player.LastHits</td>
+                <td>@player.Denies</td>
+                <td>@player.HeroDamageDone</td>
+                <td>@player.GoldPerMin</td>
+                <td class="dota-items">
+                    @foreach (var item in player.Items)
+                    {
+                        <div class="d-inline-block">
+                            @await Html.PartialAsync("GuidePartial", item)
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

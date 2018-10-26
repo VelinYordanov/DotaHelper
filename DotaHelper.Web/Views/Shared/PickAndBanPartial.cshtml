@@ -1,0 +1,11 @@
+﻿@model IEnumerable<PickOrBanDto>
+
+<div class="text-center">
+    @foreach (var pickOrBan in Model)
+    {
+        <div class="d-inline-block">
+            <img src="@pickOrBan.Hero.ImageUrl" alt="@pickOrBan.Hero.Name" />
+            <h5 class="text-uppercase font-weight-light">@((pickOrBan.IsPicked ? "pick" : "ban") + ((pickOrBan.Order) + 1))</h5>
+        </div>
+    }
+</div>

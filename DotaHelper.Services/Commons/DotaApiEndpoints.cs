@@ -14,7 +14,7 @@ namespace DotaHelper.Services.Commons
 
         public const string PlayerRecentMatchesUrlTemplate = "https://api.opendota.com/api/players/{0}/recentMatches";
 
-        public const string PlayerHeroesUrlTemplate = "https://api.opendota.com/api/players/94296097/heroes?sort=win";
+        public const string PlayerHeroesUrlTemplate = "https://api.opendota.com/api/players/{0}/heroes";
 
         public const string HeroImageUrlTemplate = "https://api.opendota.com/apps/dota2/images/heroes/{0}_sb.png";
 
