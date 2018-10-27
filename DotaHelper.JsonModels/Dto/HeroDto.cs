@@ -11,5 +11,7 @@ namespace DotaHelper.Models.Dto
         public string Name { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public string BigImageUrl { get; set; }
     }
 }

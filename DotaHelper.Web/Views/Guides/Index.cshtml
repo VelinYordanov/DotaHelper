@@ -1,22 +1,22 @@
 ﻿@model GuideListViewModel
 
-<section class="text-center">
+<section class="w-75 m-auto">
     <h1 class="mb-5 text-white">Available guides:</h1>
     @foreach (var guide in this.Model.Guides)
     {
-        <div>
+        <div class="m-5">
             <div class="d-inline-block">
                 <img src=@guide.HeroImageUrl alt=@guide.HeroId />
             </div>
-            <div class="d-inline-block">
+            <div class="d-inline-block align-middle">
                 <h1><a class="text-white" asp-action="Details" asp-route-id=@guide.Id>@guide.Title</a></h1>
-            </div>
-            <div class="d-inline-block">
-                @foreach (var item in guide.Items)
-                {
-                    @await Html.PartialAsync("GuidePartial", item);
-                }
-            </div>
+                <div class="d-inline-block">
+                    @foreach (var item in guide.Items)
+                    {
+                        @await Html.PartialAsync("GuidePartial", item);
+                    }
+                </div>
+            </div>            
         </div>
     }
 

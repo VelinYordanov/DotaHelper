@@ -102,7 +102,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             heroesProvider.Setup(x => x.GetHeroAsync(It.IsAny<string>())).Returns(Task.FromResult(new HeroDto { ImageUrl = "" }));
             var itemsProvider = new Mock<IItemsProvider>();
             var mapper = new Mock<IMapper>();
-            var guidesList = new List<GuideListDto> { new GuideListDto { HeroId = "1" }, new GuideListDto { HeroId = "2" }, new GuideListDto { HeroId = "3" } };
+            var guidesList = new List<GuideListDto> { new GuideListDto { HeroId = "1",ItemIds= new List<string>() }, new GuideListDto { HeroId = "2", ItemIds = new List<string>() }, new GuideListDto { HeroId = "3", ItemIds = new List<string>() } };
             mapper.Setup(x => x.Map<IEnumerable<GuideListDto>>(It.IsAny<object>())).Returns(guidesList);
 
             var guideService = new GuidesService(dotaHelperData.Object, heroesProvider.Object, itemsProvider.Object, mapper.Object);

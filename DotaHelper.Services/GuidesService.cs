@@ -48,7 +48,7 @@ namespace DotaHelper.Services
             var items = await this.itemsProvider.GetAllItemsAsync();
             foreach (var item in guidesList)
             {
-                item.HeroImageUrl = (await this.heroesProvider.GetHeroAsync(item.HeroId)).ImageUrl;
+                item.HeroImageUrl = (await this.heroesProvider.GetHeroAsync(item.HeroId)).BigImageUrl;
                 item.Items = item.ItemIds.Select(x => items.SingleOrDefault(y => y.ItemId == x)).ToList();
             }
 

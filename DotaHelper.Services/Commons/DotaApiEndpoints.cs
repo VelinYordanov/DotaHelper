@@ -18,6 +18,8 @@ namespace DotaHelper.Services.Commons
 
         public const string HeroImageUrlTemplate = "https://api.opendota.com/apps/dota2/images/heroes/{0}_sb.png";
 
+        public const string HerBigImageUrlTemplate = "https://api.opendota.com/apps/dota2/images/heroes/{0}_full.png?";
+
         public const string AllHeroesUrl = "https://api.opendota.com/api/heroes";
 
         public const string MatchDetailsUrl = "https://api.opendota.com/api/matches/{0}";

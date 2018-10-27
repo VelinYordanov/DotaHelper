@@ -24,7 +24,8 @@ namespace DotaHelper.Web.Commons
             CreateMap<PlayerSearchJsonModel, PlayerSearchDto>();
 
             CreateMap<HeroJsonModel, HeroDto>()
-                .ForMember(dest => dest.ImageUrl, opts => opts.MapFrom(x => string.Format(DotaApiEndpoints.HeroImageUrlTemplate, x.FullName.Remove(0, FullHeroNameStart.Length))));
+                .ForMember(dest => dest.ImageUrl, opts => opts.MapFrom(x => string.Format(DotaApiEndpoints.HeroImageUrlTemplate, x.FullName.Remove(0, FullHeroNameStart.Length))))
+                .ForMember(dest => dest.BigImageUrl, opts => opts.MapFrom(x => string.Format(DotaApiEndpoints.HerBigImageUrlTemplate, x.FullName.Remove(0, FullHeroNameStart.Length))));
 
             CreateMap<PlayerDetailsJsonModel, PlayerProfileDetailsDto>()
                 .ForMember(x => x.AvatarUrl, x => x.MapFrom(y => y.Profile.AvatarUrl))
