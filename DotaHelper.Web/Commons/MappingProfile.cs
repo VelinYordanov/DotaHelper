@@ -103,7 +103,7 @@ namespace DotaHelper.Web.Commons
                 .ForMember(x => x.WinRate, x => x.MapFrom(y => Math.Round((y.Wins / y.GamesPlayed), 2) * 100));
 
             CreateMap<HeroRankingsJsonModel, IEnumerable<RankingDto>>()
-                .ConstructUsing(x => x.Rankings.Select(y => new RankingDto { AccountId = y.AccountId, Avatar = y.Avatar, Name = y.Name, Score = y.Score }).ToList());
+                .ConstructUsing(x => x.Rankings.Select(y => new RankingDto { AccountId = y.AccountId, Avatar = y.Avatar, Name = y.Name, Score = Math.Round(y.Score) }).ToList());
         }
     }
 }
