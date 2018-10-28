@@ -12,7 +12,7 @@ namespace DotaHelper.Data.Interfaces
 
         void Remove(T item);
 
-        Task<T> FindAsync(object id);
+        Task<T> FindAsync(string id);
 
         IQueryable<T> All { get; }
 

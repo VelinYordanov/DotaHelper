@@ -19,5 +19,7 @@ namespace DotaHelper.Models.Dto
         public string HeroId { get; set; }
 
         public HeroDto Hero { get; set; }
+
+        public bool IsFavorited { get; set; }
     }
 }

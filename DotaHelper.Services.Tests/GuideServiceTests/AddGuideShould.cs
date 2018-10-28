@@ -22,7 +22,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
             var postedGuides = new Mock<List<Guide>>();
             var user = new DotaHelperUser { PostedGuides =  postedGuides.Object};
-            users.Setup(x => x.FindAsync(It.IsAny<object>())).Returns(Task.FromResult(user));
+            users.Setup(x => x.FindAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
             var userGuides = new Mock<IDotaHelperRepository<DotaHelperUserGuide>>();
             var guides = new Mock<IGuideData>();
             dotaHelperData.Setup(x => x.Users).Returns(users.Object);
@@ -46,7 +46,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
             var postedGuides = new Mock<ICollection<Guide>>();
             var user = new DotaHelperUser { PostedGuides = postedGuides.Object };
-            users.Setup(x => x.FindAsync(It.IsAny<object>())).Returns(Task.FromResult(user));
+            users.Setup(x => x.FindAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
             var userGuides = new Mock<IDotaHelperRepository<DotaHelperUserGuide>>();
             var guides = new Mock<IGuideData>();
             dotaHelperData.Setup(x => x.Users).Returns(users.Object);
@@ -70,7 +70,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
             var postedGuides = new Mock<List<Guide>>();
             var user = new DotaHelperUser { PostedGuides = postedGuides.Object };
-            users.Setup(x => x.FindAsync(It.IsAny<object>())).Returns(Task.FromResult(user));
+            users.Setup(x => x.FindAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
             var userGuides = new Mock<IDotaHelperRepository<DotaHelperUserGuide>>();
             var guides = new Mock<IGuideData>();
             dotaHelperData.Setup(x => x.Users).Returns(users.Object);

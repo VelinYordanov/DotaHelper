@@ -69,3 +69,14 @@ body {
 .w-30 {
     width:30%;
 }
+
+.favorite {
+    font-size: 70px;
+    color: #FFD700;
+    transition: all 200ms ease-out;
+}
+
+    .favorite:hover {
+        text-shadow: 0px 0px 15px #FFD700;
+        cursor: pointer;
+    }

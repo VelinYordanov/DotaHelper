@@ -28,9 +28,31 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
 
             var guideService = new GuidesService(dotaHelperData.Object, heroesProvider.Object, itemsProvider.Object, mapper.Object);
 
-            await guideService.GetGuideDetailsAsync("1");
+            await guideService.GetGuideDetailsAsync("1",null);
 
             guides.Verify(x => x.FindAsync("1"), Times.Once);
+        }
+
+        [Test]
+        public async Task SetIsFavoritedToTrueIfUserHasFavoritedTheGuide()
+        {
+            var dotaHelperData = new Mock<IDotaHelperData>();
+            var guides = new Mock<IGuideData>();
+            guides.Setup(x => x.FindAsync("1")).Returns(Task.FromResult(new Guide { Id = "1" }));
+            var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
+            users.Setup(x => x.FindAsync("5")).Returns(Task.FromResult(new DotaHelperUser { FavoritedGuides = new List<DotaHelperUserGuide> { new DotaHelperUserGuide { GuideId = "1" } } }));
+            dotaHelperData.Setup(x => x.Guides).Returns(guides.Object);
+            dotaHelperData.Setup(x => x.Users).Returns(users.Object);
+            var heroesProvider = new Mock<IHeroesProvider>();
+            var itemsProvider = new Mock<IItemsProvider>();
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(x => x.Map<GuideDetailsDto>(It.IsAny<object>())).Returns(new GuideDetailsDto { ItemIds = new List<string>() });
+
+            var guideService = new GuidesService(dotaHelperData.Object, heroesProvider.Object, itemsProvider.Object, mapper.Object);
+
+            var result = await guideService.GetGuideDetailsAsync("1", "5");
+
+            Assert.IsTrue(result.IsFavorited);
         }
 
         [Test]
@@ -48,7 +70,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
 
             var guideService = new GuidesService(dotaHelperData.Object, heroesProvider.Object, itemsProvider.Object, mapper.Object);
 
-            await guideService.GetGuideDetailsAsync("1");
+            await guideService.GetGuideDetailsAsync("1",null);
 
             mapper.Verify(x => x.Map<GuideDetailsDto>(guide), Times.Once);
         }
@@ -66,7 +88,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
 
             var guideService = new GuidesService(dotaHelperData.Object, heroesProvider.Object, itemsProvider.Object, mapper.Object);
 
-            await guideService.GetGuideDetailsAsync("1");
+            await guideService.GetGuideDetailsAsync("1",null);
 
             itemsProvider.Verify(x => x.GetAllItemsAsync(), Times.Once);
         }
@@ -84,7 +106,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
 
             var guideService = new GuidesService(dotaHelperData.Object, heroesProvider.Object, itemsProvider.Object, mapper.Object);
 
-            await guideService.GetGuideDetailsAsync("1");
+            await guideService.GetGuideDetailsAsync("1",null);
 
             heroesProvider.Verify(x => x.GetHeroAsync("9"), Times.Once);
         }

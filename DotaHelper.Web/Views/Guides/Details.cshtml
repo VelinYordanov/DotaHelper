@@ -1,16 +1,32 @@
 ﻿@model GuideDetailsViewModel
 
-<h1>@Model.Hero.Name</h1>
-<img src=@Model.Hero.ImageUrl alt=@Model.Hero.Name />
-<h3>@Model.Title</h3>
-@foreach (var item in Model.Items)
-{
-    <img src="@item.ImageUrl" alt="@item.Name" />
-}
+<section class="w-90 m-auto text-white">
+    <article class="text-center m-5">
+        <h1>@Model.Hero.Name</h1>
+        <img src=@Model.Hero.BigImageUrl alt=@Model.Hero.Name />
+        <div class="m-3">
+            @if (Model.IsFavorited)
+            {
+                <i class="fas fa-star favorite"></i>
+            }
+            else
+            {
+                <i class="far fa-star favorite"></i>
+            }
+        </div>        
+        @Html.HiddenFor(x => x.Id, new {@class="guide-id" })
+    </article>
+    <article class="w-75 m-auto text-center">
+        <h1>@Model.Title</h1>
+        <article class="mb-5">
+            <h3>Items</h3>
+            @foreach (var item in Model.Items)
+            {                
+                    @await Html.PartialAsync("GuidePartial", item);
+            }
+        </article>
+        
 
-<form asp-action="favorite" asp-route-id=@Model.Id method="post">
-    @Html.HiddenFor(x => x.Id);
-    <button type="submit">Favorite</button>
-</form>
-
-<p>@Model.Text</p>
+        <p class="h5 text-justify">@Model.Text</p>
+    </article>    
+</section>

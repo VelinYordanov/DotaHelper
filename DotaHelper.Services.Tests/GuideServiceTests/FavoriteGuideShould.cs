@@ -21,7 +21,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
             var postedGuides = new Mock<List<Guide>>();
             var user = new DotaHelperUser { PostedGuides = postedGuides.Object, Id = "3" };
-            users.Setup(x => x.FindAsync(It.IsAny<object>())).Returns(Task.FromResult(user));
+            users.Setup(x => x.FindAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
             var userGuides = new Mock<IDotaHelperRepository<DotaHelperUserGuide>>();
             var guide = new Guide { Id = "5" };
             var guides = new Mock<IGuideData>();
@@ -47,7 +47,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
             var postedGuides = new Mock<List<Guide>>();
             var user = new DotaHelperUser { PostedGuides = postedGuides.Object, Id = "3" };
-            users.Setup(x => x.FindAsync(It.IsAny<object>())).Returns(Task.FromResult(user));
+            users.Setup(x => x.FindAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
             var userGuides = new Mock<IDotaHelperRepository<DotaHelperUserGuide>>();
             var guide = new Guide { Id = "5" };
             var guides = new Mock<IGuideData>();
@@ -73,7 +73,7 @@ namespace DotaHelper.Services.Tests.GuideServiceTests
             var users = new Mock<IDotaHelperRepository<DotaHelperUser>>();
             var postedGuides = new Mock<List<Guide>>();
             var user = new DotaHelperUser { PostedGuides = postedGuides.Object, Id = "3", FavoritedGuides = new List<DotaHelperUserGuide> { new DotaHelperUserGuide { GuideId="5"} } };
-            users.Setup(x => x.FindAsync(It.IsAny<object>())).Returns(Task.FromResult(user));
+            users.Setup(x => x.FindAsync(It.IsAny<string>())).Returns(Task.FromResult(user));
             var userGuides = new Mock<IDotaHelperRepository<DotaHelperUserGuide>>();
             var guide = new Guide { Id = "5" };
             var guides = new Mock<IGuideData>();

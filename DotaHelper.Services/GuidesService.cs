@@ -55,11 +55,20 @@ namespace DotaHelper.Services
             return guidesList;
         }
 
-        public async Task<GuideDetailsDto> GetGuideDetailsAsync(object id)
+        public async Task<GuideDetailsDto> GetGuideDetailsAsync(string id, string userId)
         {
             var guide = await this.dotaHelperData.Guides.FindAsync(id);
             var guideDetails = this.mapper.Map<GuideDetailsDto>(guide);
             var items = await this.itemsProvider.GetAllItemsAsync();
+            if (userId != null)
+            {
+                var user = await this.dotaHelperData.Users.FindAsync(userId);
+                if (user.FavoritedGuides.Any(x => x.GuideId == guide.Id))
+                {
+                    guideDetails.IsFavorited = true;
+                }
+            }
+
             guideDetails.Items = guideDetails.ItemIds.Select(x => items.SingleOrDefault(y => y.ItemId == x));
             guideDetails.Hero = await this.heroesProvider.GetHeroAsync(guideDetails.HeroId);
             return guideDetails;

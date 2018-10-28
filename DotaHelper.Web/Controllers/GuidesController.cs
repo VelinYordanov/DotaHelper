@@ -43,7 +43,8 @@ namespace DotaHelper.Web.Controllers
 
         public async Task<IActionResult> Details([FromRoute]string id)
         {
-            var guide = await this.guidesService.GetGuideDetailsAsync(id);
+            var userId = (await this.userProvider.GetCurrentUserAsync(this.HttpContext))?.Id;
+            var guide = await this.guidesService.GetGuideDetailsAsync(id, userId);
             var viewModel = this.mapper.Map<GuideDetailsViewModel>(guide);
             return this.View(viewModel);
         }
@@ -90,10 +91,10 @@ namespace DotaHelper.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> Favorite(string id)
+        public async Task<ActionResult> Favorite([FromBody]GuideFavoritePostModel favoritePostModel)
         {
             var user = await this.userProvider.GetCurrentUserAsync(this.HttpContext);
-            await this.guidesService.FavoriteGuide(user.Id, id);
+            await this.guidesService.FavoriteGuide(user.Id, favoritePostModel.Id);
             return this.RedirectToAction("index", "guides");
         }
     }

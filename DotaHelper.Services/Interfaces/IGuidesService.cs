@@ -19,6 +19,6 @@ namespace DotaHelper.Services.Interfaces
 
         Task<int> GetGuidesMaxPageAsync();
 
-        Task<GuideDetailsDto> GetGuideDetailsAsync(object id);
+        Task<GuideDetailsDto> GetGuideDetailsAsync(string id, string userId);
     }
 }
