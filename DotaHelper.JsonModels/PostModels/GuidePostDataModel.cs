@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotaHelper.Models.Dto;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -33,6 +34,6 @@ namespace DotaHelper.Models.PostModels
 
         public IDictionary<string, string> HeroIdsToNames { get; set; }
 
-        public IDictionary<string, string> ItemIdsToNames { get; set; }
+        public IEnumerable<ItemDto> Items { get; set; }
     }
 }

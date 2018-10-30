@@ -14,6 +14,7 @@ namespace DotaHelper.Services
     public class GuidesService : IGuidesService
     {
         const int ElementsPerPage = 5;
+        readonly string[] SkippedItemQualities = new string[] { "consumable", "false" };
 
         private readonly IDotaHelperData dotaHelperData;
         private readonly IHeroesProvider heroesProvider;
@@ -91,8 +92,8 @@ namespace DotaHelper.Services
             var heroes = await heroesTask;
 
             var heroIdsToNames = heroes.ToDictionary(x => x.Id, x => x.Name);
-            var itemIdsToItemNames = items.ToDictionary(x => x.ItemId, x => x.Name);
-            var model = new GuidePostDataModel { HeroIdsToNames = heroIdsToNames, ItemIdsToNames = itemIdsToItemNames };
+            var filteredItems = items.Where(x => !this.SkippedItemQualities.Contains(x.Quality) && x.Cost != "0" && x.ItemId != "1032").ToList();
+            var model = new GuidePostDataModel { HeroIdsToNames = heroIdsToNames, Items = filteredItems };
             return model;
         }
 

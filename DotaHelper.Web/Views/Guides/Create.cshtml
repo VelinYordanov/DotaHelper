@@ -1,54 +1,55 @@
 ﻿@model DotaHelper.Models.PostModels.GuidePostDataModel
 
-<h2>Submit a guide</h2>
-@using (Html.BeginForm("Create", "Guides", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="hero">Hero:</label>
-        <div class="col-sm-10">
-            @Html.ValidationMessageFor(x => x.HeroId)
-            <select id="hero" name="heroId">
-                @foreach (var hero in Model.HeroIdsToNames)
-                {
-                    <option value=@hero.Key>@hero.Value</option>
-                }
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="title">Title:</label>
-        <div class="col-sm-10">
-            @Html.ValidationMessageFor(x => x.Title)
-            <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
-        </div>
-    </div>
-    for (int i = 1; i <= 6; i++)
-    {
-        <div class="form-group">
-            <label class="control-label col-sm-2" for=@("item"+i)>@("Item " + i)</label>
-            <div class="col-sm-10">
-                <select id=@("item"+i) name=@("item"+i)>
-                    @foreach (var item in Model.ItemIdsToNames)
-                    {
-                        <option value=@item.Key>@item.Value</option>
-                    }
-                </select>
-                @Html.ValidationMessage("Item" + i)
+<h1 class="text-white text-center">Submit a guide</h1>
+<form asp-action="Create" asp-controller="Guides" id="create-guide-form">
+    <section class="w-75 m-auto">
+        <div class="form-group w-50 mx-auto mt-5 mb-5 text-center">
+            <label class="control-label col-sm-2 h2 text-white" for="title">Title</label>
+            <div class="col-sm-10 m-auto">
+                @Html.ValidationMessageFor(x => x.Title)
+                <input type="text" class="form-control m-auto" id="title" placeholder="Enter title" name="title">
             </div>
         </div>
-    }
+        <h3 class="text-center text-white">Select 6 items</h3>
+        <div class="selected-items text-center m-5">
 
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="text">Text:</label>
-        <div class="col-sm-10">
-            <textarea rows="30" cols="300" id="text" name="text"></textarea>
         </div>
-        @Html.ValidationMessageFor(x => x.Text)
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-success">Submit</button>
+        <div class="m-auto">
+            <div class="d-inline-block guide-items">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="d-inline-block guide-item">
+                        <input type="hidden" value="@item.ItemId" />
+                        @await Html.PartialAsync("GuidePartial", item)
+                    </div>
+                }
+            </div>
+
         </div>
-    </div>
-}
+        <div class="form-group mt-5 mb-5">
+            <label class="control-label col-sm-2 h3 text-white" for="hero">Hero</label>
+            <div class="col-sm-10">
+                @Html.ValidationMessageFor(x => x.HeroId)
+                <select id="hero" name="heroId">
+                    @foreach (var hero in Model.HeroIdsToNames)
+                    {
+                        <option value=@hero.Key>@hero.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group mt-5 mb-5">
+            <label class="control-label col-sm-2 h3 text-white" for="text">Guide</label>
+            <div class="col-sm-10">
+                <textarea rows="30" id="text" class="w-100" name="text"></textarea>
+            </div>
+            @Html.ValidationMessageFor(x => x.Text)
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-success" id="guide-submit-button">Submit</button>
+            </div>
+        </div>
+    </section>    
+</form>

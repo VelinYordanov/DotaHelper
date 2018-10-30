@@ -59,15 +59,15 @@ body {
 }
 
 .w-90 {
-    width:90%;
+    width: 90%;
 }
 
 .w-65 {
-    width:65%;
+    width: 65%;
 }
 
 .w-30 {
-    width:30%;
+    width: 30%;
 }
 
 .favorite {
@@ -80,3 +80,7 @@ body {
         text-shadow: 0px 0px 15px #FFD700;
         cursor: pointer;
     }
+
+.selected-items {
+    height:65px;
+}
